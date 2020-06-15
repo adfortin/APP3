@@ -28,7 +28,7 @@ public class QuoteServerThread extends Thread {
 
         while (moreQuotes) {
             try {
-                byte[] buf = new byte[256];
+                byte[] buf = new byte[200];
 
                 // receive request
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
