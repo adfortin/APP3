@@ -15,7 +15,7 @@ public class QuoteServerThread extends Thread {
 
     public QuoteServerThread(String name) throws IOException {
         super(name);
-        socket = new DatagramSocket(4445);
+        socket = new DatagramSocket(25001);
 
         try {
             in = new BufferedReader(new FileReader("one-liners.txt"));
