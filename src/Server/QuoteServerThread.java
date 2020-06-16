@@ -12,9 +12,15 @@ public class QuoteServerThread extends Thread {
 	protected BufferedReader in = null;
 	protected boolean moreQuotes = true;
 
+<<<<<<< HEAD
 	public QuoteServerThread() throws IOException {
 		this("QuoteServerThread");
 	}
+=======
+    public QuoteServerThread(String name) throws IOException {
+        super(name);
+        socket = new DatagramSocket(25001);
+>>>>>>> master
 
 	public QuoteServerThread(String name) throws IOException {
 		super(name);
@@ -39,7 +45,11 @@ public class QuoteServerThread extends Thread {
 		String dString = null;
 		dString = new Date().toString();
 
+<<<<<<< HEAD
 		buf = dString.getBytes();
+=======
+                buf = packet.getData();
+>>>>>>> master
 
 		// send the response to the client at "address" and "port"
 		InetAddress address = packet.getAddress();
