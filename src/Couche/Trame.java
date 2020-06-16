@@ -9,9 +9,11 @@ public class Trame {
 	private byte[] packetAmount;
 	private byte[] data;
 	private byte[] CRC;
+	private byte[] header;
 	
 	public Trame()
 	{
+		setHeader("BEGIN".getBytes());
 		setPacketNumber(0);
 		setPacketAmount(0);
 		setData(new byte[187]);
@@ -70,6 +72,7 @@ public class Trame {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 		try {
 			outputStream.write(CRC);
+			outputStream.write(header);
 			outputStream.write(packetNumber);
 			outputStream.write(packetAmount);
 			outputStream.write(data);
@@ -87,6 +90,7 @@ public class Trame {
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 		try {
+			outputStream.write(header);
 			outputStream.write(packetNumber);
 			outputStream.write(packetAmount);
 			outputStream.write(data);
@@ -97,6 +101,14 @@ public class Trame {
 		}
 
 		return outputStream.toByteArray();
+	}
+
+	public byte[] getHeader() {
+		return header;
+	}
+
+	public void setHeader(byte[] header) {
+		this.header = header;
 	}
 	
 	

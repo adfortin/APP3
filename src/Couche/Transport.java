@@ -4,13 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.URI;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +15,7 @@ public class Transport {
     byte[] content;
     private List<Trame> packets = new ArrayList<>();
     List<byte[]> byteList = new ArrayList<>();
-    private int maxDataLength = 188;
+    private int maxDataLength = 174;
     byte[] fileName;
     Liaison liaison; 
 	
@@ -56,8 +50,8 @@ public class Transport {
 			Trame trame1 = new Trame();
 
 			trame1.setData(fileName);
-			trame1.setPacketNumber(00000000);
-			trame1.setPacketAmount(numberOfPacket);
+			trame1.setPacketNumber(1);
+			trame1.setPacketAmount(numberOfPacket + 2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
 			DatagramSocket socket;
@@ -76,8 +70,8 @@ public class Transport {
 			
 			
 			// display response
-			String received = new String(packet.getData(), 0, packet.getLength());
-			System.out.println("Quote of the Moment: " + received);
+			//String received = new String(packet.getData(), 0, packet.getLength());
+			//System.out.println("Quote of the Moment: " + received);
 
 			socket.close();
 			
@@ -108,7 +102,7 @@ public class Transport {
             try {
                 trame = new Trame();
                 trame.setPacketNumber(packetNumber);
-                trame.setPacketAmount(packetNumber);
+                trame.setPacketAmount(numberOfPacket + 2);
                 trame.setData(bytes);
                 trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
                 packets.add(trame);
