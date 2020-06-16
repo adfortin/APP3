@@ -33,30 +33,23 @@ public class Transport {
 	
 	public void sendRequest(byte[] text,String ipServer) 
 	{
-
-		
-		//SplitPacketArray
         contentLength = text.length;
-
+        content = text;
+		
         if (contentLength > maxDataLength) {
             numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
-            //System.out.println(numberOfPacket);
         }
         
-		
-		//Send file name to server
-		sendFirstRequest(text, ipServer);
-		
-		
+        SplitContentIntoArray();
         
         
-        //Send Packet 1....
-        
+		sendFirstRequest(ipServer);
+		sendRemainingPackets(ipServer);
         
         
 	}
 	
-	public void sendFirstRequest(byte[] text,String ipServer) 
+	public void sendFirstRequest(String ipServer) 
 	{
 		try {
 
@@ -108,28 +101,48 @@ public class Transport {
 		fileName = path.getFileName().toString().getBytes();
 	}
 	
+	private void sendRemainingPackets(String ipServer) {
+        int packetNumber = 2;
+        Trame trame;
+        for (byte[] bytes : byteList) {
+            try {
+                trame = new Trame();
+                trame.setPacketNumber(packetNumber);
+                trame.setPacketAmount(packetNumber);
+                trame.setData(bytes);
+                trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
+                packets.add(trame);
+
+
+
+                DatagramSocket socket;
+                socket = new DatagramSocket();
+
+                byte[] buf = trame.getTrame();
+                InetAddress address = InetAddress.getByName(ipServer);
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
+                socket.send(packet);
+
+
+                // get response
+                packet = new DatagramPacket(buf, buf.length);
+                socket.receive(packet);
+
+
+
+                // display response
+                String received = new String(packet.getData(), 0, packet.getLength());
+                //System.out.println("Quote of the Moment: " + received);
+
+                socket.close();
+
+                packetNumber++;
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 	
-	
-    /*
 
-    // get a datagram socket1
-DatagramSocket socket = new DatagramSocket();
-
-    // send request
-byte[] buf = new byte[256];
-InetAddress address = InetAddress.getByName(args[0]);
-DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
-socket.send(packet);
-
-    // get response
-packet = new DatagramPacket(buf, buf.length);
-socket.receive(packet);
-
-// display response
-String received = new String(packet.getData(), 0, packet.getLength());
-System.out.println("Quote of the Moment: " + received);
-
-socket.close();
-
-*/
 }
