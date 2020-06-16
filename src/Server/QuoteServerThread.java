@@ -1,7 +1,10 @@
 package Server;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.nio.charset.StandardCharsets;
 
 import Couche.Liaison;
@@ -18,17 +21,22 @@ public class QuoteServerThread extends Thread {
     Trame responseTrame;
     int errorCount = 0;
 
-    public QuoteServerThread() throws IOException {
-	this("QuoteServerThread");
+
+	public QuoteServerThread() throws IOException {
+		this("QuoteServerThread");
+	}
+
+	public QuoteServerThread(String name) throws IOException {
+		super(name);
+		socket = new DatagramSocket(25001);
+	}
     }
 
-    public QuoteServerThread(String name) throws IOException {
-        super(name);
-        socket = new DatagramSocket(25001);
-
-    }
-
-    public void run() {
+	public void run() {
+		dayTime();
+	}
+	
+	public void dayTime() {
 
         while (moreQuotes) {
             try {
@@ -57,7 +65,7 @@ public class QuoteServerThread extends Thread {
                         responseTrame = new Trame("0SUCCESS".getBytes());
                         break;
                     case 1:
-                        System.out.println("Manque packet no: " + (receivedtrame.getPacketNumberInt() /*- 1 (à enlever ) */));
+                        System.out.println("Manque packet no: " + (receivedtrame.getPacketNumberInt() /*- 1 (ï¿½ enlever ) */));
                         responseTrame = new Trame("1MISSINGPACKET".getBytes());
                         break;
                     default:

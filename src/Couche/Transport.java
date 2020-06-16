@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+<<<<<<< HEAD
 import java.net.SocketException;
 import java.net.URI;
 import java.net.UnknownHostException;
@@ -11,6 +12,8 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+=======
+>>>>>>> SendManyPackets
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +57,10 @@ public class Transport {
 			trame1.setPacketAmount(numberOfPacket + 2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
+			trame1.setCRC("1000000001".getBytes());
+			trame1.setPacketNumber(0);
+			trame1.setPacketAmount(0);
+				
 			DatagramSocket socket;
 			socket = new DatagramSocket();
 			
