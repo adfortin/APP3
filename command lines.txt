@@ -1,0 +1,1 @@
+localhost "C:\Users\Assim\OneDrive - USherbrooke\GI S3 E20\APP3\APP3\poeme.txt" 0

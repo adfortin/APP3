@@ -18,58 +18,60 @@ public class QuoteServerThread extends Thread {
 
 	public QuoteServerThread(String name) throws IOException {
 		super(name);
-		socket = new DatagramSocket(4445);
-
-		try {
-			in = new BufferedReader(new FileReader("texte.txt"));
-		} catch (FileNotFoundException e) {
-			System.err.println("Could not open quote file. Serving time instead.");
-		}
+		socket = new DatagramSocket(25001);
 	}
 
 	public void run() {
+		dayTime();
+	}
+	
+	public void dayTime() {
 
-		while (moreQuotes) {
-			try {
-				byte[] buf = new byte[256];
+		byte[] buf = new byte[256];
 
-				// receive request
-				DatagramPacket packet = new DatagramPacket(buf, buf.length);
-				socket.receive(packet);
+		try {
+		
+		// receive request
+		DatagramPacket packet = new DatagramPacket(buf, buf.length);
+		socket.receive(packet);
 
-				// figure out response
-				String dString = null;
-				if (in == null)
-					dString = new Date().toString();
-				else
-					dString = getNextQuote();
+		// figure out response
+		String dString = null;
+		dString = new Date().toString();
 
-				buf = dString.getBytes();
+		buf = dString.getBytes();
 
-				// send the response to the client at "address" and "port"
-				InetAddress address = packet.getAddress();
-				int port = packet.getPort();
-				packet = new DatagramPacket(buf, buf.length, address, port);
-				socket.send(packet);
-			} catch (IOException e) {
-				e.printStackTrace();
-				moreQuotes = false;
-			}
+		// send the response to the client at "address" and "port"
+		InetAddress address = packet.getAddress();
+		int port = packet.getPort();
+		packet = new DatagramPacket(buf, buf.length, address, port);
+		socket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		socket.close();
 	}
-
-	protected String getNextQuote() {
-		String returnValue = null;
+	
+	public void sendFileName(String fileName) {
+		
+		byte[] buf = new byte[256];
 		try {
-			if ((returnValue = in.readLine()) == null) {
-				in.close();
-				moreQuotes = false;
-				returnValue = "No more quotes. Goodbye.";
-			}
+			
+		DatagramPacket packet = new DatagramPacket(buf, buf.length);
+
+			socket.receive(packet);
+			
+			buf = fileName.getBytes();
+			
+			InetAddress address = packet.getAddress();
+			int port = packet.getPort();
+			packet = new DatagramPacket(buf, buf.length, address, port);
+			socket.send(packet);
+			
+			
 		} catch (IOException e) {
-			returnValue = "IOException occurred in server.";
+			e.printStackTrace();
 		}
-		return returnValue;
+		socket.close();
 	}
 }

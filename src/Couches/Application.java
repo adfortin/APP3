@@ -13,8 +13,8 @@ public class Application {
 		BufferedReader br = new BufferedReader(new FileReader(file));
 
 		String st;
-		while ((st = br.readLine()) != null)
-			System.out.println(st);
+		while ((st = br.readLine()) != null) {
+		}
 	}
 
 	public void terminate(Boolean termination) throws Exception {
