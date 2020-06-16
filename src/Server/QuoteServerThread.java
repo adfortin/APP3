@@ -41,7 +41,7 @@ public class QuoteServerThread extends Thread {
                 else
                     dString = getNextQuote();
 
-                buf = dString.getBytes();
+                buf = packet.getData();
 
 		// send the response to the client at "address" and "port"
                 InetAddress address = packet.getAddress();
