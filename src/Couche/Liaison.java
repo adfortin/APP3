@@ -1,5 +1,7 @@
 package Couche;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.CRC32;
@@ -13,7 +15,6 @@ public class Liaison {
 		
 		long value = crc.getValue();
 		
-		System.out.println(String.valueOf(value));
 		return String.valueOf(value).getBytes();
 	}
 	
@@ -33,11 +34,39 @@ public class Liaison {
 	    	  trame.setPacketNumber(m.group(3).getBytes());
 	    	  trame.setPacketAmount(m.group(4).getBytes());
 	    	  trame.setData(m.group(5).getBytes());
+	    	  trame.setPacketNumberInt(Integer.parseInt(m.group(3)));
+              trame.setPacketAmountInt(Integer.parseInt(m.group(4)));
 	      } else {
 	         System.out.println("NO MATCH");
 	      }
 	      
 	      return trame;
+	}
+	
+	public boolean validateTrameCRC(Trame trameRecu)
+	{
+		byte[] crc = trameRecu.getCRC();
+		byte[] trameWithoutCRC = trameRecu.getTrameTrimmed();		
+		byte[] newCRC = calculCRC(trameWithoutCRC);
+
+		return Arrays.equals(crc,newCRC);
+	}
+	
+	public int checkForSkipedPacket(List<Trame> packets, int currentPacketId) {
+        if (packets.size() == 0 && currentPacketId == 1) {
+            return 0;
+        }else {
+            if (currentPacketId - 1 != packets.get(packets.size() - 1).getPacketNumberInt()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+	
+	public void AskForPaquet(byte[] paquetNumber) 
+	{
+		
 	}
 	
 }

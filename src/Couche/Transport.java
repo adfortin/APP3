@@ -21,7 +21,7 @@ public class Transport {
     byte[] content;
     private List<Trame> packets = new ArrayList<>();
     List<byte[]> byteList = new ArrayList<>();
-    private int maxDataLength = 174;
+    private int maxDataLength = 169;
     byte[] fileName;
     Liaison liaison; 
 	
@@ -58,6 +58,8 @@ public class Transport {
 			trame1.setPacketNumber(1);
 			trame1.setPacketAmount(numberOfPacket +2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
+			System.out.println(new String(trame1.getTrameTrimmed()));
+			//System.out.println(trame1.getTrameTrimmed().length);
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
@@ -89,9 +91,22 @@ public class Transport {
 	
 	
 	private void SplitContentIntoArray() {
-        for (int i = 0; i < contentLength; i += maxDataLength ) {
+        /*for (int i = 0; i < contentLength; i += maxDataLength ) {
             byte[] cuttedByte = Arrays.copyOfRange(content , i, i + maxDataLength);
             byteList.add(cuttedByte);
+            System.out.println(cuttedByte.length);
+        }*/
+		
+		
+		byte[] cuttedByte = new byte[maxDataLength];
+        for (int i = 0; i < contentLength; i += maxDataLength) {
+            if (i + maxDataLength < contentLength) {
+                cuttedByte = Arrays.copyOfRange(content, i, i + maxDataLength);
+                byteList.add(cuttedByte);
+            } else {
+                cuttedByte = Arrays.copyOfRange(content, i, contentLength);
+                byteList.add(cuttedByte);
+            }
         }
     }
 	
@@ -106,10 +121,12 @@ public class Transport {
             try {
                 trame = new Trame();
                 trame.setPacketNumber(packetNumber);
-                trame.setPacketAmount(numberOfPacket +2);
+                trame.setPacketAmount(numberOfPacket + 2);
                 trame.setData(bytes);
                 trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
                 packets.add(trame);
+                //System.out.println(new String(trame.getTrameTrimmed()));
+                //System.out.println(trame.getTrameTrimmed().length);
 
                 DatagramSocket socket;
                 socket = new DatagramSocket();
@@ -123,7 +140,6 @@ public class Transport {
                 // get response
                 packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-
 
 
                 // display response
