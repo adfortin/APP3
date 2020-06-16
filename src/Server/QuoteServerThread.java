@@ -28,7 +28,7 @@ public class QuoteServerThread extends Thread {
 	
 	public void dayTime() {
 
-		byte[] buf = new byte[256];
+		byte[] buf = new byte[200];
 
 		try {
 		
