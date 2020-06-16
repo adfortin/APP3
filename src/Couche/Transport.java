@@ -39,7 +39,7 @@ public class Transport {
 
         if (contentLength > maxDataLength) {
             numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
-            System.out.println(numberOfPacket);
+            //System.out.println(numberOfPacket);
         }
         
 		
@@ -61,8 +61,8 @@ public class Transport {
 
 			Trame trame1 = new Trame();
 			trame1.setData(fileName);
-			trame1.setPacketNumber("00000000".getBytes());
-			trame1.setPacketAmount(bytes);
+			trame1.setPacketNumber(00000000);
+			trame1.setPacketAmount(numberOfPacket);
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
@@ -104,7 +104,6 @@ public class Transport {
 	public void GetFileName(Path path) {
 		fileName = path.getFileName().toString().getBytes();
 	}
-	
 	
 	
 	
