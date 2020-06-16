@@ -1,27 +1,19 @@
 package Client;
 
-import Couches.Application;
+import java.io.IOException;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import Couche.Application;
 
 public class Client {
-    public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException 
+	{
+		if (args.length != 2) {
+			System.out.println("Hostname or Filepath missing");
+			return;
+		}
+      
+		Application app = new Application(args[0],args[1]);
+		app.Run();
 
-    	String hostname;
-    	Path filePath;
-    	
-        if (args.length != 2) {
-             System.out.println("Usage: java Client <hostname> <filename.txt>");
-             return;
-        }else {
-        	hostname = args[0];
-        	filePath = Paths.get(args[1]);
-        	Application app = new Application(hostname, filePath);
-        
-        	app.Run();
-        }
-    }
+	}
 }
