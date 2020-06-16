@@ -11,128 +11,120 @@ import java.util.List;
 
 public class Transport {
 	private int numberOfPacket;
-    private int contentLength;
-    byte[] content;
-    private List<Trame> packets = new ArrayList<>();
-    List<byte[]> byteList = new ArrayList<>();
-    private int maxDataLength = 174;
-    byte[] fileName;
-    Liaison liaison; 
-	
-	public Transport() 
-	{
+	private int contentLength;
+	byte[] content;
+	private List<Trame> packets = new ArrayList<>();
+	List<byte[]> byteList = new ArrayList<>();
+	private int maxDataLength = 169;
+	byte[] fileName;
+	Liaison liaison;
+
+	public Transport() {
 		liaison = new Liaison();
 	}
-	
-	
-	public void sendRequest(byte[] text,String ipServer) 
-	{
-        contentLength = text.length;
-        content = text;
-		
-        if (contentLength > maxDataLength) {
-            numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
-        }
-        
-        SplitContentIntoArray();
-        
-        
+
+	public void sendRequest(byte[] text, String ipServer) {
+		contentLength = text.length;
+		content = text;
+
+		if (contentLength > maxDataLength) {
+			numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
+		}
+
+		SplitContentIntoArray();
+
 		sendFirstRequest(ipServer);
 		sendRemainingPackets(ipServer);
-  
+
 	}
-	
-	public void sendFirstRequest(String ipServer) 
-	{
+
+	public void sendFirstRequest(String ipServer) {
 		try {
 
 			Trame trame1 = new Trame();
 
 			trame1.setData(fileName);
 			trame1.setPacketNumber(1);
-			trame1.setPacketAmount(numberOfPacket +2);
+			trame1.setPacketAmount(numberOfPacket + 2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
-			
+
 			byte[] buf = trame1.getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
 			socket.send(packet);
-			
-			
-			
+
 			// get response
 			packet = new DatagramPacket(buf, buf.length);
 			socket.receive(packet);
-			
-			
+
 			// display response
 			String received = new String(packet.getData(), 0, packet.getLength());
 
 			socket.close();
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
-	
+
 	private void SplitContentIntoArray() {
-        for (int i = 0; i < contentLength; i += maxDataLength ) {
-            byte[] cuttedByte = Arrays.copyOfRange(content , i, i + maxDataLength);
-            byteList.add(cuttedByte);
-        }
-    }
-	
+		byte[] cuttedByte = new byte[maxDataLength];
+		for (int i = 0; i < contentLength; i += maxDataLength) {
+			if (i + maxDataLength < contentLength) {
+				cuttedByte = Arrays.copyOfRange(content, i, i + maxDataLength);
+				byteList.add(cuttedByte);
+			} else {
+				cuttedByte = Arrays.copyOfRange(content, i, contentLength);
+				byteList.add(cuttedByte);
+			}
+		}
+	}
+
 	public void GetFileName(Path path) {
 		fileName = path.getFileName().toString().getBytes();
 	}
-	
+
 	private void sendRemainingPackets(String ipServer) {
-        int packetNumber = 2;
-        Trame trame;
-        for (byte[] bytes : byteList) {
-            try {
-                trame = new Trame();
-                trame.setPacketNumber(packetNumber);
-                trame.setPacketAmount(numberOfPacket +2);
-                trame.setData(bytes);
-                trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
-                packets.add(trame);
+		int packetNumber = 2;
+		Trame trame;
+		for (byte[] bytes : byteList) {
+			try {
+				trame = new Trame();
+				trame.setPacketNumber(packetNumber);
+				trame.setPacketAmount(numberOfPacket + 2);
+				trame.setData(bytes);
+				trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
+				packets.add(trame);
 
-                DatagramSocket socket;
-                socket = new DatagramSocket();
+				DatagramSocket socket;
+				socket = new DatagramSocket();
 
-                byte[] buf = trame.getTrame();
-                InetAddress address = InetAddress.getByName(ipServer);
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
-                socket.send(packet);
+				byte[] buf = trame.getTrame();
+				InetAddress address = InetAddress.getByName(ipServer);
+				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
+				socket.send(packet);
 
+				// get response
+				packet = new DatagramPacket(buf, buf.length);
+				socket.receive(packet);
 
-                // get response
-                packet = new DatagramPacket(buf, buf.length);
-                socket.receive(packet);
+				// display response
+				String received = new String(packet.getData(), 0, packet.getLength());
+				// System.out.println("Quote of the Moment: " + received);
 
+				socket.close();
 
-
-                // display response
-                String received = new String(packet.getData(), 0, packet.getLength());
-                //System.out.println("Quote of the Moment: " + received);
-
-                socket.close();
-
-                packetNumber++;
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-	
+				packetNumber++;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

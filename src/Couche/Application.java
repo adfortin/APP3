@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 
 public class Application {
 
-		private String path;
-		private String ipServer;
+	private String path;
+	private String ipServer;
 			 
 		public Application() 
 		{

@@ -8,15 +8,18 @@ public class Trame {
 	private byte[] header;
 	private byte[] packetNumber;
 	private byte[] packetAmount;
+	private int packetNumberInt;
+	private int packetAmountInt;
 	private byte[] data;
 	private byte[] CRC;
-	private byte[] header;
 	
 	public Trame()
 	{
 		setHeader("BEGIN".getBytes());
 		setPacketNumber(0);
 		setPacketAmount(0);
+		setPacketNumberInt(0);
+		setPacketAmountInt(0);
 		setData(new byte[187]);
 		setCRC(new byte[5]);
 	}
@@ -121,6 +124,21 @@ public class Trame {
 	public void setHeader(byte[] header) {
 		this.header = header;
 	}
-	
-	
+
+	public int getPacketNumberInt() {
+		return packetNumberInt;
+	}
+
+	public void setPacketNumberInt(int packetNumberInt) {
+		this.packetNumberInt = packetNumberInt;
+	}
+
+	public int getPacketAmountInt() {
+		return packetAmountInt;
+	}
+
+	public void setPacketAmountInt(int packetAmountInt) {
+		this.packetAmountInt = packetAmountInt;
+	}
+
 }
