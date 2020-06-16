@@ -11,6 +11,7 @@ public class Liaison {
 		
 		long value = crc.getValue();
 		
+		System.out.println(String.valueOf(value));
 		return String.valueOf(value).getBytes();
 	}
 	

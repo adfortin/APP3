@@ -21,7 +21,7 @@ public class Transport {
     byte[] content;
     private List<Trame> packets = new ArrayList<>();
     List<byte[]> byteList = new ArrayList<>();
-    private int maxDataLength = 188;
+    private int maxDataLength = 174;
     byte[] fileName;
     Liaison liaison; 
 	
@@ -56,15 +56,14 @@ public class Transport {
 			Trame trame1 = new Trame();
 
 			trame1.setData(fileName);
-			trame1.setPacketNumber(00000000);
-			trame1.setPacketAmount(numberOfPacket);
+			trame1.setPacketNumber(1);
+			trame1.setPacketAmount(numberOfPacket +1);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
 			
-			byte[] buf = new byte[180];
-			buf = trame1.getTrame();
+			byte[] buf = trame1.getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
 			socket.send(packet);
@@ -77,7 +76,7 @@ public class Transport {
 			
 			// display response
 			String received = new String(packet.getData(), 0, packet.getLength());
-			System.out.println("Quote of the Moment: " + received);
+			//System.out.println("Quote of the Moment: " + received);
 
 			socket.close();
 			
@@ -108,7 +107,7 @@ public class Transport {
             try {
                 trame = new Trame();
                 trame.setPacketNumber(packetNumber);
-                trame.setPacketAmount(packetNumber);
+                trame.setPacketAmount(numberOfPacket +1);
                 trame.setData(bytes);
                 trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
                 packets.add(trame);
