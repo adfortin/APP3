@@ -1,14 +1,30 @@
 package Couches;
 
-import java.util.zip.CRC32;
-
 public class Trame {
 
-	private CRC32 CRC;
-	private int size;
-	private String tail;
+	private byte[] packetNumber = new byte[4];
+	private byte[] packetAmount = new byte[4];
+	private byte[] data = new byte[187];
+	private byte[] CRC = new byte[5];
 	
 	public Trame() {
 		
 	}
+	
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public byte[] getCRC() {
+		return CRC;
+	}
+
+	public void setCRC(byte[] cRC) {
+		CRC = cRC;
+	}
+
 }
