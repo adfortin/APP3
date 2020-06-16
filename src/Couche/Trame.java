@@ -12,8 +12,8 @@ public class Trame {
 	
 	public Trame()
 	{
-		setPacketNumber(new byte[4]);
-		setPacketAmount(new byte[4]);
+		setPacketNumber(0);
+		setPacketAmount(0);
 		setData(new byte[187]);
 		setCRC(new byte[5]);
 	}
@@ -38,21 +38,49 @@ public class Trame {
 		return packetNumber;
 	}
 
-	public void setPacketNumber(byte[] packetNumber) {
-		this.packetNumber = packetNumber;
+	public void setPacketNumber(int packetNumber) {
+		this.packetNumber = createByteFromInt(packetNumber);
 	}
 
 	public byte[] getPacketAmount() {
 		return packetAmount;
 	}
 
-	public void setPacketAmount(byte[] packetAmount) {
-		this.packetAmount = packetAmount;
+	public void setPacketAmount(int packetAmount) {
+		this.packetAmount = createByteFromInt(packetAmount);
 	}
+	
+	public byte[] createByteFromInt(int packets) 
+    {
+        String packetString = String.valueOf(packets);
+
+        while (packetString.length() < 8) 
+        {
+            packetString = "0" + packetString;
+        }
+
+        return packetString.getBytes();
+    }
+	
+	public byte[] getTrameTrimmed() 
+	{
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+		try {
+			outputStream.write(packetNumber);
+			outputStream.write(packetAmount);
+			outputStream.write(data);
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return outputStream.toByteArray( );
+	}
+	
 	
 	public byte[] getTrame() 
 	{
-
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 		try {
 			outputStream.write(CRC);
