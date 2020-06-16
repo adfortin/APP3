@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Transport {
-	private double numberOfPacket;
+	private int numberOfPacket;
     private int contentLength;
     byte[] content;
     private List<Trame> packets = new ArrayList<>();
@@ -31,20 +32,20 @@ public class Transport {
 	
 	public void sendRequest(byte[] text,String ipServer) 
 	{
-		
-		//Send file name to server
-		sendFirstRequest(text, ipServer);
-		
+
 		
 		//SplitPacketArray
         contentLength = text.length;
 
         if (contentLength > maxDataLength) {
-            numberOfPacket = Math.ceil(contentLength / maxDataLength);
+            numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
             System.out.println(numberOfPacket);
         }
         
-//        SplitContentIntoArray();
+		
+		//Send file name to server
+		sendFirstRequest(text, ipServer);
+		
 		
         
         
@@ -57,11 +58,11 @@ public class Transport {
 	public void sendFirstRequest(byte[] text,String ipServer) 
 	{
 		try {
-			
+
 			Trame trame1 = new Trame();
-			trame1.setCRC("1000000001".getBytes());
+			trame1.setData(fileName);
 			trame1.setPacketNumber("00000000".getBytes());
-			trame1.setPacketAmount("11111111".getBytes());
+			trame1.setPacketAmount(bytes);
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
@@ -103,6 +104,8 @@ public class Transport {
 	public void GetFileName(Path path) {
 		fileName = path.getFileName().toString().getBytes();
 	}
+	
+	
 	
 	
     /*
