@@ -24,6 +24,7 @@ public class Application {
 		public void Run() 
 		{
 			Transport transportLayer = new Transport();
+			transportLayer.GetFileName(Paths.get(path));
 			transportLayer.sendRequest(GetFileText(), ipServer);
 		}
 

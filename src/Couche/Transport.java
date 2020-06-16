@@ -5,7 +5,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.URI;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +21,7 @@ public class Transport {
     private List<Trame> packets = new ArrayList<>();
     List<byte[]> byteList = new ArrayList<>();
     private int maxDataLength = 188;
+    byte[] fileName;
 	
 	public Transport() 
 	{
@@ -39,7 +44,7 @@ public class Transport {
             System.out.println(numberOfPacket);
         }
         
-        SplitContentIntoArray();
+//        SplitContentIntoArray();
 		
         
         
@@ -95,7 +100,9 @@ public class Transport {
         }
     }
 	
-	
+	public void GetFileName(Path path) {
+		fileName = path.getFileName().toString().getBytes();
+	}
 	
 	
     /*
