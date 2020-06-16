@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,58 +16,55 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Transport {
-	private double numberOfPacket;
+	private int numberOfPacket;
     private int contentLength;
     byte[] content;
     private List<Trame> packets = new ArrayList<>();
     List<byte[]> byteList = new ArrayList<>();
     private int maxDataLength = 188;
     byte[] fileName;
+    Liaison liaison; 
 	
 	public Transport() 
 	{
-		
+		liaison = new Liaison();
 	}
 	
 	
 	public void sendRequest(byte[] text,String ipServer) 
 	{
-		
-		//Send file name to server
-		sendFirstRequest(text, ipServer);
-		
-		
-		//SplitPacketArray
         contentLength = text.length;
-
+        content = text;
+		
         if (contentLength > maxDataLength) {
-            numberOfPacket = Math.ceil(contentLength / maxDataLength);
-            System.out.println(numberOfPacket);
+            numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
         }
         
-//        SplitContentIntoArray();
-		
+        SplitContentIntoArray();
         
         
-        //Send Packet 1....
-        
+		sendFirstRequest(ipServer);
+		sendRemainingPackets(ipServer);
         
         
 	}
 	
-	public void sendFirstRequest(byte[] text,String ipServer) 
+	public void sendFirstRequest(String ipServer) 
 	{
 		try {
-			
+
 			Trame trame1 = new Trame();
-			trame1.setCRC("1000000001".getBytes());
-			trame1.setPacketNumber("00000000".getBytes());
-			trame1.setPacketAmount("11111111".getBytes());
+
+			trame1.setData(fileName);
+			trame1.setPacketNumber(00000000);
+			trame1.setPacketAmount(numberOfPacket);
+			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
 			
-			byte[] buf = trame1.getTrame();
+			byte[] buf = new byte[180];
+			buf = trame1.getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
 			socket.send(packet);
@@ -75,7 +73,6 @@ public class Transport {
 			// get response
 			packet = new DatagramPacket(buf, buf.length);
 			socket.receive(packet);
-			
 			
 			
 			// display response
@@ -104,27 +101,48 @@ public class Transport {
 		fileName = path.getFileName().toString().getBytes();
 	}
 	
+	private void sendRemainingPackets(String ipServer) {
+        int packetNumber = 2;
+        Trame trame;
+        for (byte[] bytes : byteList) {
+            try {
+                trame = new Trame();
+                trame.setPacketNumber(packetNumber);
+                trame.setPacketAmount(packetNumber);
+                trame.setData(bytes);
+                trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
+                packets.add(trame);
+
+
+
+                DatagramSocket socket;
+                socket = new DatagramSocket();
+
+                byte[] buf = trame.getTrame();
+                InetAddress address = InetAddress.getByName(ipServer);
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
+                socket.send(packet);
+
+
+                // get response
+                packet = new DatagramPacket(buf, buf.length);
+                socket.receive(packet);
+
+
+
+                // display response
+                String received = new String(packet.getData(), 0, packet.getLength());
+                //System.out.println("Quote of the Moment: " + received);
+
+                socket.close();
+
+                packetNumber++;
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 	
-    /*
 
-    // get a datagram socket1
-DatagramSocket socket = new DatagramSocket();
-
-    // send request
-byte[] buf = new byte[256];
-InetAddress address = InetAddress.getByName(args[0]);
-DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
-socket.send(packet);
-
-    // get response
-packet = new DatagramPacket(buf, buf.length);
-socket.receive(packet);
-
-// display response
-String received = new String(packet.getData(), 0, packet.getLength());
-System.out.println("Quote of the Moment: " + received);
-
-socket.close();
-
-*/
 }
