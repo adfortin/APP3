@@ -45,8 +45,7 @@ public class Transport {
         
 		sendFirstRequest(ipServer);
 		sendRemainingPackets(ipServer);
-        
-        
+  
 	}
 	
 	public void sendFirstRequest(String ipServer) 
@@ -77,7 +76,6 @@ public class Transport {
 			
 			// display response
 			String received = new String(packet.getData(), 0, packet.getLength());
-			//System.out.println("Quote of the Moment: " + received);
 
 			socket.close();
 			
@@ -112,8 +110,6 @@ public class Transport {
                 trame.setData(bytes);
                 trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
                 packets.add(trame);
-
-
 
                 DatagramSocket socket;
                 socket = new DatagramSocket();

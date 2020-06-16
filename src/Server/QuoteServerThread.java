@@ -3,11 +3,16 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import Couche.Liaison;
+import Couche.Trame;
+
 public class QuoteServerThread extends Thread {
 
     protected DatagramSocket socket = null;
     protected BufferedReader in = null;
     protected boolean moreQuotes = true;
+    Liaison liaison = new Liaison();
+    Trame trame;
 
     public QuoteServerThread() throws IOException {
 	this("QuoteServerThread");
@@ -17,11 +22,6 @@ public class QuoteServerThread extends Thread {
         super(name);
         socket = new DatagramSocket(25001);
 
-        try {
-            in = new BufferedReader(new FileReader("one-liners.txt"));
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not open quote file. Serving time instead.");
-        }
     }
 
     public void run() {
@@ -29,20 +29,14 @@ public class QuoteServerThread extends Thread {
         while (moreQuotes) {
             try {
                 byte[] buf = new byte[200];
-
                 // receive request
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-
-                // figure out response
-                String dString = null;
-                if (in == null)
-                    dString = new Date().toString();
-                else
-                    dString = getNextQuote();
-
+                
+                trame = liaison.getTrame(new String(packet.getData()).trim());
+                
                 buf = packet.getData();
-
+                
 		// send the response to the client at "address" and "port"
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
@@ -50,23 +44,10 @@ public class QuoteServerThread extends Thread {
                 socket.send(packet);
             } catch (IOException e) {
                 e.printStackTrace();
-		moreQuotes = false;
+                moreQuotes = false;
             }
         }
         socket.close();
     }
 
-    protected String getNextQuote() {
-        String returnValue = null;
-        try {
-            if ((returnValue = in.readLine()) == null) {
-                in.close();
-		moreQuotes = false;
-                returnValue = "No more quotes. Goodbye.";
-            }
-        } catch (IOException e) {
-            returnValue = "IOException occurred in server.";
-        }
-        return returnValue;
-    }
 }
