@@ -79,6 +79,25 @@ public class Trame {
 			e.printStackTrace();
 		}
 
-		return outputStream.toByteArray( );
+		return outputStream.toByteArray();
 	}
+	
+	public byte[] getTrameTrimmed() 
+	{
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+		try {
+			outputStream.write(packetNumber);
+			outputStream.write(packetAmount);
+			outputStream.write(data);
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return outputStream.toByteArray();
+	}
+	
+	
 }

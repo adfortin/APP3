@@ -23,10 +23,11 @@ public class Transport {
     List<byte[]> byteList = new ArrayList<>();
     private int maxDataLength = 188;
     byte[] fileName;
+    Liaison liaison; 
 	
 	public Transport() 
 	{
-		
+		liaison = new Liaison();
 	}
 	
 	
@@ -60,14 +61,17 @@ public class Transport {
 		try {
 
 			Trame trame1 = new Trame();
+
 			trame1.setData(fileName);
 			trame1.setPacketNumber(00000000);
 			trame1.setPacketAmount(numberOfPacket);
+			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
 			
-			byte[] buf = trame1.getTrame();
+			byte[] buf = new byte[180];
+			buf = trame1.getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
 			socket.send(packet);
@@ -76,7 +80,6 @@ public class Transport {
 			// get response
 			packet = new DatagramPacket(buf, buf.length);
 			socket.receive(packet);
-			
 			
 			
 			// display response
