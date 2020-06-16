@@ -1,4 +1,4 @@
-package Couche;
+package AuxClass;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

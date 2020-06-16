@@ -3,10 +3,12 @@ package Server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
+import AuxClass.Trame;
+
 import java.nio.charset.StandardCharsets;
 
 import Couche.Liaison;
-import Couche.Trame;
 
 public class QuoteServerThread extends Thread {
 

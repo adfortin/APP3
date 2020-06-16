@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.CRC32;
 
+import AuxClass.Trame;
+
 public class Liaison {
 
 	public byte[] calculCRC(byte[] message) 

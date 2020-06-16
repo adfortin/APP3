@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import AuxClass.Trame;
+
 public class Transport {
 	private int numberOfPacket;
 	private int contentLength;
