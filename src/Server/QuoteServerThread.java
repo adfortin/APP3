@@ -45,7 +45,7 @@ public class QuoteServerThread extends Thread {
                     int checkResponse;
 
                     //Create error
-                    if (receivedtrame.getPacketNumberInt() == 3) {
+                    if (receivedtrame.getPacketNumberInt() == 60) {
                         checkResponse = liaison.checkForSkipedPacket(receivedPackets, receivedtrame.getPacketNumberInt() + 1);
                     } else {
                         checkResponse = liaison.checkForSkipedPacket(receivedPackets, receivedtrame.getPacketNumberInt());
