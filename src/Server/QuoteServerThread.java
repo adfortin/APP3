@@ -36,7 +36,7 @@ public class QuoteServerThread extends Thread {
                 trame = liaison.getTrame(new String(packet.getData()).trim());
                 
                 buf = packet.getData();
-                
+
 		// send the response to the client at "address" and "port"
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();

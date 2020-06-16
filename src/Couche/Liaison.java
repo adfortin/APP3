@@ -28,17 +28,16 @@ public class Liaison {
 		
 	      
 	      if (m.find( )) {
-	         System.out.println("CRC: " + m.group(1) );
-	         System.out.println("Header: " + m.group(2) );
-	         System.out.println("Number: " + m.group(3) );
-	         System.out.println("Amount: " + m.group(4) );
-	         System.out.println("Data: " + m.group(5) );
-	         System.out.println("");
+	    	  trame.setCRC(m.group(1).getBytes());
+	    	  trame.setHeader(m.group(2).getBytes());
+	    	  trame.setPacketNumber(m.group(3).getBytes());
+	    	  trame.setPacketAmount(m.group(4).getBytes());
+	    	  trame.setData(m.group(5).getBytes());
 	      } else {
 	         System.out.println("NO MATCH");
 	      }
 	      
-	      return new Trame();
+	      return trame;
 	}
 	
 }

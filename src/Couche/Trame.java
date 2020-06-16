@@ -43,6 +43,11 @@ public class Trame {
 	public void setPacketNumber(int packetNumber) {
 		this.packetNumber = createByteFromInt(packetNumber);
 	}
+	
+	public void setPacketNumber(byte[] packetNumber) {
+		this.packetNumber = packetNumber;
+	}
+
 
 	public byte[] getPacketAmount() {
 		return packetAmount;
@@ -51,6 +56,11 @@ public class Trame {
 	public void setPacketAmount(int packetAmount) {
 	
 		this.packetAmount = createByteFromInt(packetAmount);
+	}
+	
+	public void setPacketAmount(byte[] packetAmount) {
+		
+		this.packetAmount = packetAmount;
 	}
 	
 	public byte[] createByteFromInt(int packets) 
