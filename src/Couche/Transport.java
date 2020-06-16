@@ -6,9 +6,17 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Transport {
-
+	private double numberOfPacket;
+    private int contentLength;
+    byte[] content;
+    private List<Trame> packets = new ArrayList<>();
+    List<byte[]> byteList = new ArrayList<>();
+    private int maxDataLength = 188;
 	
 	public Transport() 
 	{
@@ -19,7 +27,26 @@ public class Transport {
 	public void sendRequest(byte[] text,String ipServer) 
 	{
 		
+		//Send file name to server
 		sendFirstRequest(text, ipServer);
+		
+		
+		//SplitPacketArray
+        contentLength = text.length;
+
+        if (contentLength > maxDataLength) {
+            numberOfPacket = Math.ceil(contentLength / maxDataLength);
+            System.out.println(numberOfPacket);
+        }
+        
+        SplitContentIntoArray();
+		
+        
+        
+        //Send Packet 1....
+        
+        
+        
 	}
 	
 	public void sendFirstRequest(byte[] text,String ipServer) 
@@ -59,6 +86,14 @@ public class Transport {
 		
 		
 	}
+	
+	
+	private void SplitContentIntoArray() {
+        for (int i = 0; i < contentLength; i += maxDataLength ) {
+            byte[] cuttedByte = Arrays.copyOfRange(content , i, i + maxDataLength);
+            byteList.add(cuttedByte);
+        }
+    }
 	
 	
 	
