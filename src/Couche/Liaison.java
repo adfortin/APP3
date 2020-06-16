@@ -1,5 +1,8 @@
 package Couche;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -66,8 +69,37 @@ public class Liaison {
         }
     }
 	
-	public void AskForPaquet(byte[] paquetNumber) 
-	{
+	public void ecrireLog(Trame trameAEcrire) {
+		File log = new File(".\\liaisonDeDonnees.log");
 		
+		try {
+			if (log.createNewFile()) {
+				System.out.println("Fichier log créé: " + log.getName());
+			}
+			else {
+				System.out.println("Fichier log existant");
+			}
+		} catch (IOException e) {
+			System.out.println("Erreur de creation de fichier log");
+			e.printStackTrace();
+		}
+	
+		try {
+			FileWriter logWriter = new FileWriter(log.getAbsolutePath());
+			
+			logWriter.write(java.time.LocalDateTime.now() + " ");
+			
+			logWriter.write(new String(trameAEcrire.getCRC()).trim() + " ");
+			logWriter.write(new String(trameAEcrire.getHeader()).trim() + " ");
+			logWriter.write(new String(trameAEcrire.getPacketNumber()).trim() + " ");
+			logWriter.write(new String(trameAEcrire.getPacketAmount()).trim() + " ");
+			logWriter.write(new String(trameAEcrire.getData()).trim() + "\n");
+			
+			logWriter.close();
+			System.out.print("ecrire live up");
+		} catch (IOException e) {
+			System.out.println("Erreur au niveau de l'ecriture du log");
+			e.printStackTrace();
+		}
 	}
 }

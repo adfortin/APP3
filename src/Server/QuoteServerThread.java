@@ -30,7 +30,6 @@ public class QuoteServerThread extends Thread {
 		super(name);
 		socket = new DatagramSocket(25001);
 	}
-    }
 
 	public void run() {
 		dayTime();

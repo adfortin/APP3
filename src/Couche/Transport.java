@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-<<<<<<< HEAD
 import java.net.SocketException;
 import java.net.URI;
 import java.net.UnknownHostException;
@@ -12,8 +11,6 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-=======
->>>>>>> SendManyPackets
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
