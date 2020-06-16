@@ -11,15 +11,16 @@ import java.util.List;
 
 public class Transport {
 	private int numberOfPacket;
-	private int contentLength;
-	byte[] content;
-	private List<Trame> packets = new ArrayList<>();
-	List<byte[]> byteList = new ArrayList<>();
-	private int maxDataLength = 169;
-	byte[] fileName;
-	Liaison liaison;
-
-	public Transport() {
+    private int contentLength;
+    byte[] content;
+    private List<Trame> packets = new ArrayList<>();
+    List<byte[]> byteList = new ArrayList<>();
+    private int maxDataLength = 169;
+    byte[] fileName;
+    Liaison liaison; 
+	
+	public Transport() 
+	{
 		liaison = new Liaison();
 	}
 
@@ -47,6 +48,8 @@ public class Transport {
 			trame1.setPacketNumber(1);
 			trame1.setPacketAmount(numberOfPacket + 2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
+			System.out.println(new String(trame1.getTrameTrimmed()));
+			//System.out.println(trame1.getTrameTrimmed().length);
 
 			DatagramSocket socket;
 			socket = new DatagramSocket();
@@ -73,33 +76,42 @@ public class Transport {
 	}
 
 	private void SplitContentIntoArray() {
+        /*for (int i = 0; i < contentLength; i += maxDataLength ) {
+            byte[] cuttedByte = Arrays.copyOfRange(content , i, i + maxDataLength);
+            byteList.add(cuttedByte);
+            System.out.println(cuttedByte.length);
+        }*/
+		
+		
 		byte[] cuttedByte = new byte[maxDataLength];
-		for (int i = 0; i < contentLength; i += maxDataLength) {
-			if (i + maxDataLength < contentLength) {
-				cuttedByte = Arrays.copyOfRange(content, i, i + maxDataLength);
-				byteList.add(cuttedByte);
-			} else {
-				cuttedByte = Arrays.copyOfRange(content, i, contentLength);
-				byteList.add(cuttedByte);
-			}
-		}
-	}
-
+        for (int i = 0; i < contentLength; i += maxDataLength) {
+            if (i + maxDataLength < contentLength) {
+                cuttedByte = Arrays.copyOfRange(content, i, i + maxDataLength);
+                byteList.add(cuttedByte);
+            } else {
+                cuttedByte = Arrays.copyOfRange(content, i, contentLength);
+                byteList.add(cuttedByte);
+            }
+        }
+    }
+	
 	public void GetFileName(Path path) {
 		fileName = path.getFileName().toString().getBytes();
 	}
 
 	private void sendRemainingPackets(String ipServer) {
-		int packetNumber = 2;
-		Trame trame;
-		for (byte[] bytes : byteList) {
-			try {
-				trame = new Trame();
-				trame.setPacketNumber(packetNumber);
-				trame.setPacketAmount(numberOfPacket + 2);
-				trame.setData(bytes);
-				trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
-				packets.add(trame);
+        int packetNumber = 2;
+        Trame trame;
+        for (byte[] bytes : byteList) {
+            try {
+                trame = new Trame();
+                trame.setPacketNumber(packetNumber);
+                trame.setPacketAmount(numberOfPacket + 2);
+                trame.setData(bytes);
+                trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
+                packets.add(trame);
+                //System.out.println(new String(trame.getTrameTrimmed()));
+                //System.out.println(trame.getTrameTrimmed().length);
 
 				DatagramSocket socket;
 				socket = new DatagramSocket();
@@ -119,12 +131,19 @@ public class Transport {
 
 				socket.close();
 
-				packetNumber++;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+                // display response
+                String received = new String(packet.getData(), 0, packet.getLength());
+                //System.out.println("Quote of the Moment: " + received);
+
+                socket.close();
+
+                packetNumber++;
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+	
 
 }

@@ -6,8 +6,9 @@ import java.nio.file.Paths;
 
 public class Application {
 
-	private String path;
-	private String ipServer;
+		private String path;
+		private String ipServer;
+		Transport transportLayer = new Transport();
 			 
 		public Application() 
 		{
@@ -23,7 +24,6 @@ public class Application {
 		
 		public void Run() 
 		{
-			Transport transportLayer = new Transport();
 			transportLayer.GetFileName(Paths.get(path));
 			transportLayer.sendRequest(GetFileText(), ipServer);
 		}

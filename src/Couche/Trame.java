@@ -12,6 +12,8 @@ public class Trame {
 	private int packetAmountInt;
 	private byte[] data;
 	private byte[] CRC;
+	private int packetNumberInt;
+    private int packetAmountInt;
 	
 	public Trame()
 	{
@@ -22,6 +24,8 @@ public class Trame {
 		setPacketAmountInt(0);
 		setData(new byte[187]);
 		setCRC(new byte[5]);
+		setPacketNumberInt(0);
+        setPacketAmountInt(0);
 	}
 
 	public byte[] getData() {
@@ -66,6 +70,22 @@ public class Trame {
 		
 		this.packetAmount = packetAmount;
 	}
+	
+	public int getPacketNumberInt() {
+        return packetNumberInt;
+    }
+
+    public void setPacketNumberInt(int packetNumberInt) {
+        this.packetNumberInt = packetNumberInt;
+    }
+
+    public int getPacketAmountInt() {
+        return packetAmountInt;
+    }
+
+    public void setPacketAmountInt(int packetAmountInt) {
+        this.packetAmountInt = packetAmountInt;
+    }
 	
 	public byte[] createByteFromInt(int packets) 
 	{
