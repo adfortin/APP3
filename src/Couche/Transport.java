@@ -18,13 +18,21 @@ public class Transport {
 	
 	public void sendRequest(byte[] text,String ipServer) 
 	{
-		 try {
+		
+		sendFirstRequest(text, ipServer);
+	}
+	
+	public void sendFirstRequest(byte[] text,String ipServer) 
+	{
+		try {
+			
 			Trame trame1 = new Trame();
 			trame1.setCRC("1000000001".getBytes());
 			trame1.setPacketNumber("00000000".getBytes());
 			trame1.setPacketAmount("11111111".getBytes());
 
-			DatagramSocket socket = new DatagramSocket();
+			DatagramSocket socket;
+			socket = new DatagramSocket();
 			
 			byte[] buf = trame1.getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
@@ -48,10 +56,7 @@ public class Transport {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public void sendFirstRequest() 
-	{
+		
 		
 	}
 	
