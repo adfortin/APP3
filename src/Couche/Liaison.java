@@ -13,44 +13,31 @@ public class Liaison {
 		
 		long value = crc.getValue();
 		
+		System.out.println(String.valueOf(value));
 		return String.valueOf(value).getBytes();
 	}
 	
 	
-	public Trame validateTrame(String data) {
-        Trame trame = new Trame();
-        String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)"; 
-        Pattern r = Pattern.compile(pattern, Pattern.MULTILINE);
-
-        Matcher m = r.matcher(data);
-
-
-          if (m.find( )) {
-             System.out.println("CRC: " + m.group(1) );
-             System.out.println("Header: " + m.group(2) );
-             System.out.println("Number: " + m.group(3) );
-             System.out.println("Amount: " + m.group(4) );
-             System.out.println("Data: " + m.group(5) );
-             System.out.println("");
-          } else {
-             System.out.println("NO MATCH");
-          }
+	public Trame getTrame(String data)
+	{
+		Trame trame = new Trame();
+		String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)"; 
+		Pattern r = Pattern.compile(pattern, Pattern.MULTILINE);
 		
+		Matcher m = r.matcher(data);
 		
-		trame.setHeader("BEGIN".getBytes());
-		trame.setCRC(m.group(1).getBytes());
-		trame.setPacketNumber(Integer.parseInt(m.group(3)));
-		trame.setPacketAmount(Integer.parseInt(m.group(4)));
-		
-		return trame;
+	      
+	      if (m.find( )) {
+	    	  trame.setCRC(m.group(1).getBytes());
+	    	  trame.setHeader(m.group(2).getBytes());
+	    	  trame.setPacketNumber(m.group(3).getBytes());
+	    	  trame.setPacketAmount(m.group(4).getBytes());
+	    	  trame.setData(m.group(5).getBytes());
+	      } else {
+	         System.out.println("NO MATCH");
+	      }
+	      
+	      return trame;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

@@ -28,19 +28,16 @@ public class QuoteServerThread extends Thread {
 
         while (moreQuotes) {
             try {
-                byte[] receivedData = new byte[200];
+                byte[] buf = new byte[200];
                 // receive request
                 DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
                 socket.receive(packet);
                 
-                receivedData = packet.getData();
+                trame = liaison.getTrame(new String(packet.getData()).trim());
                 
-                trame = liaison.validateTrame(new String(receivedData).trim());
-                 
-                //System.out.println(trame.getCRC());
-                
+                buf = packet.getData();
 
-        // send the response to the client at "address" and "port"
+		// send the response to the client at "address" and "port"
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
                 packet = new DatagramPacket(receivedData, receivedData.length, address, port);
