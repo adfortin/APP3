@@ -14,7 +14,8 @@ public class QuoteServerThread extends Thread {
     protected boolean moreQuotes = true;
     Liaison liaison = new Liaison();
     List<Trame> receivedPackets = new ArrayList<>();
-    Trame trame;
+    Trame receivedtrame;
+    Trame responseTrame;
     int errorCount = 0;
 
     public QuoteServerThread() throws IOException {
@@ -35,59 +36,49 @@ public class QuoteServerThread extends Thread {
                 // receive request
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
+                              
+                receivedtrame = liaison.getTrame(new String(packet.getData()).trim());
                 
-                trame = liaison.getTrame(new String(packet.getData()).trim());
-                if (liaison.validateTrameCRC(trame))
+                if (liaison.validateTrameCRC(receivedtrame))
                 {
                 	 // Look for missing packet
                     int checkResponse;
 
                     //Create error
-                    if (trame.getPacketNumberInt() == 6) {
-                        checkResponse = liaison.checkForSkipedPacket(receivedPackets, trame.getPacketNumberInt() + 1);
+                    if (receivedtrame.getPacketNumberInt() == 3) {
+                        checkResponse = liaison.checkForSkipedPacket(receivedPackets, receivedtrame.getPacketNumberInt() + 1);
                     } else {
-                        checkResponse = liaison.checkForSkipedPacket(receivedPackets, trame.getPacketNumberInt());
+                        checkResponse = liaison.checkForSkipedPacket(receivedPackets, receivedtrame.getPacketNumberInt());
                     }
 
                     switch (checkResponse) {
                     case 0:
-                        System.out.println("Recu packet no: " + trame.getPacketNumberInt());
+                        System.out.println("Recu packet no: " + receivedtrame.getPacketNumberInt());
+                        responseTrame = new Trame("0SUCCESS".getBytes());
                         break;
                     case 1:
-                        System.out.println("Manque packet no: " + (trame.getPacketNumberInt() /*- 1 (à enlever ) */));
+                        System.out.println("Manque packet no: " + (receivedtrame.getPacketNumberInt() /*- 1 (à enlever ) */));
+                        responseTrame = new Trame("1MISSINGPACKET".getBytes());
                         break;
                     default:
-                        System.out.println("CASE DEFAULT");
                         break;
                     }
-                    receivedPackets.add(trame);
+                    receivedPackets.add(receivedtrame);
                 }
                 else 
                 {
-                	System.out.println("CRC du paquet no: " + new String(trame.getPacketNumber()) + " non valide!!!!");
-                	
-            		while (AskPaquetToClient(trame.getPacketNumber()) != true)
-            		{
-            			errorCount++;
-            			System.out.println("    Asking for packet no: " + new String(trame.getPacketNumber()) + " (" +  errorCount +"/3)");
-                    	if (errorCount >= 3) 
-                    	{
-                    		System.out.print("TransmissionErrorExcpetion");
-                    		errorCount = 0;
-                    		return;
-                    	}
-            			
-            		}
+                	System.out.println("CRC du paquet no: " + new String(receivedtrame.getPacketNumber()) + " non valide!!!!");
+                	responseTrame = new Trame("2CRCERROR".getBytes());
                 }
                 //System.out.println(new String(trame.getTrameTrimmed()));
                 //System.out.println(trame.getTrameTrimmed().length);
-                
-                
-                buf = packet.getData();
+                buf = responseTrame.getTrame();
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
                 packet = new DatagramPacket(buf, buf.length, address, port);
                 socket.send(packet);
+                
+
             } catch (IOException e) {
                 e.printStackTrace();
                 moreQuotes = false;

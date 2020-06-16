@@ -53,10 +53,12 @@ public class Liaison {
 	}
 	
 	public int checkForSkipedPacket(List<Trame> packets, int currentPacketId) {
+        //System.out.println(packets.size() + "  " +  currentPacketId);
         if (packets.size() == 0 && currentPacketId == 1) {
             return 0;
         }else {
             if (currentPacketId - 1 != packets.get(packets.size() - 1).getPacketNumberInt()) {
+
                 return 1;
             } else {
                 return 0;

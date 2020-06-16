@@ -12,7 +12,7 @@ public class Client {
 			return;
 		}
       
-		Application app = new Application(args[0],args[1]);
+		Application app = new Application(args[0],args[1],args[2]);
 		app.Run();
 
 	}

@@ -16,7 +16,7 @@ public class Application {
 			ipServer = "";
 		}
 		
-		public Application(String path,String ipServer) 
+		public Application(String path,String ipServer,String ErrorCode) 
 		{
 			this.path = path;
 			this.ipServer = ipServer;

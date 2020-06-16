@@ -23,6 +23,17 @@ public class Trame {
 		setPacketNumberInt(0);
         setPacketAmountInt(0);
 	}
+	
+	public Trame(byte[] data)
+	{
+		setHeader(new byte[0]);
+		setPacketNumber(new byte[0]);
+		setPacketAmount(new byte[0]);
+		setData(data);
+		setCRC(new byte[0]);
+		setPacketNumberInt(0);
+        setPacketAmountInt(0);
+	}
 
 	public byte[] getData() {
 		return data;
