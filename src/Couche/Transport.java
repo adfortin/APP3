@@ -57,7 +57,7 @@ public class Transport {
 
 			trame1.setData(fileName);
 			trame1.setPacketNumber(1);
-			trame1.setPacketAmount(numberOfPacket +1);
+			trame1.setPacketAmount(numberOfPacket +2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
 
 			DatagramSocket socket;
@@ -67,6 +67,7 @@ public class Transport {
 			InetAddress address = InetAddress.getByName(ipServer);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
 			socket.send(packet);
+			
 			
 			
 			// get response
@@ -107,7 +108,7 @@ public class Transport {
             try {
                 trame = new Trame();
                 trame.setPacketNumber(packetNumber);
-                trame.setPacketAmount(numberOfPacket +1);
+                trame.setPacketAmount(numberOfPacket +2);
                 trame.setData(bytes);
                 trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
                 packets.add(trame);
