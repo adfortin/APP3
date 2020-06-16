@@ -35,7 +35,7 @@ public class QuoteServerThread extends Thread {
                 
                 receivedData = packet.getData();
                 
-                trame = liaison.getTrame(new String(receivedData).trim());
+                trame = liaison.validateTrame(new String(receivedData).trim());
                  
                 //System.out.println(trame.getCRC());
                 

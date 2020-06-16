@@ -17,7 +17,7 @@ public class Liaison {
 	}
 	
 	
-	public Trame getTrame(String data) {
+	public Trame validateTrame(String data) {
         Trame trame = new Trame();
         String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)"; 
         Pattern r = Pattern.compile(pattern, Pattern.MULTILINE);
@@ -38,9 +38,9 @@ public class Liaison {
 		
 		
 		trame.setHeader("BEGIN".getBytes());
-		//trame.setCRC(crc.getBytes());
-		//trame.setPacketNumber();
-		//trame.setPacketNumber();
+		trame.setCRC(m.group(1).getBytes());
+		trame.setPacketNumber(Integer.parseInt(m.group(3)));
+		trame.setPacketAmount(Integer.parseInt(m.group(4)));
 		
 		return trame;
 	}
