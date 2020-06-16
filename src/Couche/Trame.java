@@ -47,26 +47,42 @@ public class Trame {
 	}
 
 	public void setPacketAmount(int packetAmount) {
-	
+
 		this.packetAmount = createByteFromInt(packetAmount);
 	}
 	
 	public byte[] createByteFromInt(int packets) 
-	{
-		String packetString = String.valueOf(packets);
+    {
+        String packetString = String.valueOf(packets);
 
-		while (packetString.length() < 8) 
-		{
-			packetString = "0" + packetString;
-		}
+        while (packetString.length() < 8) 
+        {
+            packetString = "0" + packetString;
+        }
+
+        return packetString.getBytes();
+    }
+	
+	public byte[] getTrameTrimmed() 
+
+	{
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+		try {
+			outputStream.write(packetNumber);
+			outputStream.write(packetAmount);
+			outputStream.write(data);
 		
-		return packetString.getBytes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return outputStream.toByteArray( );
 	}
 	
-
+	
 	public byte[] getTrame() 
 	{
-
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 		try {
 			outputStream.write(CRC);

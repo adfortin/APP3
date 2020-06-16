@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 �UVRES COMPL�TES
 
 DE
@@ -344,3 +345,9 @@ Chaque �cole autrefois eut sa divinit�,
 Et le seul dieu commun �tait la vanit�.
 
 Quelquefois, en fuyant l�orgueil et son ivresse.
+=======
+Le choix d’une épître doit intéresser le cœur et éclairer l’esprit. Une vérité qui n’est pas lieu commun, qui touche au bonheur des hommes, qui fournit des images propres à émouvoir, est le meilleur choix qu’on puisse faire. S’il s’y trouve des peintures qui éveillent et flattent l’imagination, des maximes, des préceptes qu’on puisse présenter de la manière la plus séduisante, c’est le moyen d’éclairer l’esprit en l’amusant.
+Les idées doivent être rangées dans l’ordre le plus naturel, de façon qu’elles se succèdent sans effort, et qu’une pensée serve toujours à développer l’autre : c’est épargner de la peine au lecteur, soutenir son attention, et ménager sa curiosité. Les peintures y doivent être tellement variées que l’imagination soit toujours surprise et charmée.
+Il faut que les liaisons soient courtes, claires, et fassent aisément passer d’un objet à un autre. Elles sont souvent difficiles à trouver ; on ne les rencontre pas du premier coup : en général on doit beaucoup se méfier de son premier jet. Pour éviter de sacrifier des vers, des morceaux qui ont coûté du travail, peut-être conviendrait-il mieux de commencer par mettre sa première façon en prose.
+Se hâter d’aller à la fin de son sujet, y entraîner son lecteur par la route la plus courte ; ne peindre d’un objet que ce qui est nécessaire à votre dessein principal ; ne pas trop s’appesantir sur les détails, quand les masses suffisent pour faire les impressions que vous désirez produire ; finir toujours, s’il est possible, par quelque morceau brillant et d’effet.
+>>>>>>> SendManyPackets
