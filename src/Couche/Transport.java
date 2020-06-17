@@ -87,15 +87,23 @@ public class Transport {
 		content = text;
 		wantedError = Integer.parseInt(wantedErr);
 
-		if (contentLength > maxDataLength) {
-			numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
+		if (text.length > 1)
+		{
+			if (contentLength > maxDataLength) {
+				numberOfPacket = (int) Math.ceil(contentLength / maxDataLength);
+			}
+			SplitContentIntoArray();
+
+			randonIndex = getRandomIndex();
+
+			sendFirstRequest(ipServer);
+			sendRemainingPackets(ipServer);
 		}
-		SplitContentIntoArray();
-
-		randonIndex = getRandomIndex();
-
-		sendFirstRequest(ipServer);
-		sendRemainingPackets(ipServer);
+		else
+		{
+			System.out.println("Fichier vide");
+		}
+		
 	}
 
 	/**
@@ -117,6 +125,12 @@ public class Transport {
 			byte[] buf = trame1.getTrame();
 			byte[] bufResponse = new Trame(new byte[20]).getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
+			
+			if (!address.isReachable(1)) 
+			{
+				System.out.println("Serveur Fermé");
+			}
+			
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25002);
 
 			while (codeError != 0) {
@@ -178,6 +192,9 @@ public class Transport {
 				byte[] bufResponse = new Trame(new byte[20]).getTrame();
 
 				InetAddress address = InetAddress.getByName(ipServer);
+				
+
+				
 				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25002);
 				socket.send(packet);
 

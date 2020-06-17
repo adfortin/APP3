@@ -69,6 +69,7 @@ public class Application {
 			return Files.readAllBytes(Paths.get(path));
 
 		} catch (IOException e) {
+			System.out.println("Fichier inexistant");
 			e.printStackTrace();
 		}
 		return "Error while reading file".getBytes();
