@@ -10,9 +10,16 @@ import java.util.regex.Pattern;
 import java.util.zip.CRC32;
 
 import AuxClass.Trame;
-
+/**
+ *
+ * Couche de liaison entre le serveur et le client
+ *
+ */
 public class Liaison {
 
+	/**
+	 * Mï¿½thode servant ï¿½ trouver le CRC ï¿½ partir de donnï¿½es en bytes
+	 */
 	public byte[] calculCRC(byte[] message) {
 		String mTrimmed = new String(message).trim();
 		CRC32 crc = new CRC32();
@@ -22,6 +29,11 @@ public class Liaison {
 		return String.valueOf(value).getBytes();
 	}
 
+	/**
+	 * Mï¿½thode qui retourne une trame avec les donnï¿½es insï¿½rï¿½es par argument en string
+	 * @param String donnï¿½es que l'on veut convertir en trame
+	 * @return Trame avec les donnï¿½es insï¿½rï¿½es dans le paramï¿½tre
+	 */
 	public Trame getTrame(String data) {
 		Trame trame = new Trame();
 		String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)";
@@ -42,6 +54,12 @@ public class Liaison {
 		return trame;
 	}
 
+	/**
+	 * Mï¿½thode qui reï¿½oit une trame et qui compare le CRC de la trame avec le CRC calculï¿½ du reste de la trame
+	 * afin de vï¿½rifier que les donnï¿½es sont bien exactes
+	 * @param trameRecu Trame qui contient le CRC et les donnï¿½es ï¿½ recalculer
+	 * @return True si le CRC de la trame reï¿½ue et le CRC calculï¿½ sont ï¿½quivalent
+	 */
 	public boolean validateTrameCRC(Trame trameRecu) {
 		byte[] crc = trameRecu.getCRC();
 		byte[] trameWithoutCRC = trameRecu.getTrameTrimmed();
@@ -50,6 +68,12 @@ public class Liaison {
 		return Arrays.equals(crc, newCRC);
 	}
 
+	/**
+	 * Mï¿½thode qui vï¿½rifie si un packet est manquant
+	 * @param packets Liste des packets qui sont envoyï¿½s
+	 * @param currentPacketId Numï¿½ro du packet ï¿½ vï¿½rifier
+	 * @return True si le packet est manquant
+	 */
 	public int checkForSkipedPacket(List<Trame> packets, int currentPacketId) {
 		if (packets.size() == 0 && currentPacketId == 1) {
 			return 0;
@@ -61,13 +85,19 @@ public class Liaison {
 			}
 		}
 	}
-    
+	
+	/**
+	 * Mï¿½thode qui permet d'ï¿½crire un log avec les informations de la trame reï¿½ue en paramï¿½tre
+	 * le paramï¿½tre operation sert ï¿½ savoir si la trame est reï¿½ue du client ou du serveur
+	 * @param trameAEcrire La trame ï¿½ ï¿½crire dans le fichier log
+	 * @param operation Quel ï¿½lï¿½ment ï¿½ envoyï¿½ la trame
+	 */
     public void ecrireLog(Trame trameAEcrire,int operation, int  packetSuccessful, int packetLoss, int packetError) {
         File log = new File(".\\liaisonDeDonnees.log");
 
         try {
             if (log.createNewFile()) {
-                System.out.println("Fichier log créé: " + log.getName());
+                System.out.println("Fichier log crï¿½ï¿½: " + log.getName());
             }
         } catch (IOException e) {
             System.out.println("Erreur de creation de fichier log");
@@ -81,11 +111,11 @@ public class Liaison {
 
             if (operation == 0)
             {
-                logWriter.write("Paquet reçu du client: ");
+                logWriter.write("Paquet reï¿½u du client: ");
             }
             else 
             {
-                logWriter.write("Paquet envoyé au client: ");
+                logWriter.write("Paquet envoyï¿½ au client: ");
             }
 
 

@@ -8,28 +8,63 @@ import AuxClass.Trame;
 
 import Couche.Liaison;
 
+/**
+ * 
+ * Classe permettant de commencer l'application serveur
+ *
+ */
 public class QuoteServerThread extends Thread {
 
+	/**
+	 * Socket serveur
+	 */
 	private DatagramSocket socket = null;
+	/**
+	 * Initialisation de la couche de liaison entre le serveur et le client
+	 */
 	private Liaison liaison = new Liaison();
+	/**
+	 * Liste des paquets reçus
+	 */
 	private List<Trame> receivedPackets = new ArrayList<>();
+	/**
+	 * Trame reçue par le serveur
+	 */
 	private Trame receivedtrame;
+	/**
+	 * Trame à envoyer par le serveur
+	 */
 	private Trame responseTrame;
+	/**
+	 * Variable permettant d'arrêter le transfert de paquets lorsque l'envoi est terminé
+	 */
 	private boolean moreQuotes = true;
 	private int packetloss;
 	private int packetSuccessful;
 	private int packetError;
 
+	/**
+	 * Constructeur du serveur avec un nom par défaut
+	 * @throws IOException Erreur de construction
+	 */
 	public QuoteServerThread() throws IOException {
 		this("QuoteServerThread");
 	}
 
+	/**
+	 * Constructeur du serveur par défaut. Associe un port 25002 au socket
+	 * @param name Nom du serveur
+	 * @throws IOException Erreur de construction
+	 */
 	public QuoteServerThread(String name) throws IOException {
 		super(name);
 		socket = new DatagramSocket(25002);
 
 	}
 
+	/**
+	 * Méthode permettant d'exécuter le serveur
+	 */
 	public void run() {
 
 		while (moreQuotes) {
@@ -88,6 +123,9 @@ public class QuoteServerThread extends Thread {
 		SaveFile();
 	}
 
+	/**
+	 * Méthode permettant de sauvegarder le fichier envoyé par le client
+	 */
 	private void SaveFile() {
 		int numberOfPackets = receivedPackets.get(0).getPacketAmountInt();
 		String nameOfFile = getFileName();
@@ -120,6 +158,10 @@ public class QuoteServerThread extends Thread {
 		}
 	}
 
+	/**
+	 * Méthode getter du nom du fichier reçu
+	 * @return FileName
+	 */
 	private String getFileName() {
 		// get file name except for the extension
 		String CompleteFileName = new String(receivedPackets.get(0).getData()).trim();
