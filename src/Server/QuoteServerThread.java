@@ -37,6 +37,7 @@ public class QuoteServerThread extends Thread {
 				socket.receive(packet);
 
 				receivedtrame = liaison.getTrame(new String(packet.getData()));
+				liaison.ecrireLog(receivedtrame, 0);
 
 				if (liaison.validateTrameCRC(receivedtrame)) {
 					// Look for missing packet
@@ -66,7 +67,8 @@ public class QuoteServerThread extends Thread {
 				int port = packet.getPort();
 				packet = new DatagramPacket(buf, buf.length, address, port);
 				socket.send(packet);
-
+				liaison.ecrireLog(responseTrame, 1);
+				
 				if (receivedtrame.getPacketNumberInt() == receivedtrame.getPacketAmountInt()) {
 					moreQuotes = false;
 				}

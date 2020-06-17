@@ -1,0 +1,76 @@
+2020-06-16T22:30:55.382598600 Paquet reçu du client: 1893341651 BEGIN 00000001 00000012 poeme.txt
+2020-06-16T22:30:55.385598400 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.385598400 Paquet reçu du client: 4170236735 BEGIN 00000002 00000012 LorÃ©eem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unkno
+2020-06-16T22:30:55.386599200 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.386599200 Paquet reçu du client: 1175342569 BEGIN 00000003 00000012 wn printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, r
+2020-06-16T22:30:55.387599800 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.387599800 Paquet reçu du client: 1070347269 BEGIN 00000004 00000012 emaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publi
+2020-06-16T22:30:55.388599500 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.389600100 Paquet reçu du client: 2759144805 BEGIN 00000005 00000012 shing software like Aldus PageMaker including versions of Lorem Ipsum. LorÃ©eem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+2020-06-16T22:30:55.389600100 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.390600500 Paquet reçu du client: 0000000000 BEGIN 00000006 00000012 the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived no
+2020-06-16T22:30:55.390600500 Paquet envoyé au client:     2CRCERROR
+2020-06-16T22:30:55.391600700 Paquet reçu du client: 3606681525 BEGIN 00000006 00000012 the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived no
+2020-06-16T22:30:55.391600700 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.392600800 Paquet reçu du client: 268178835 BEGIN 00000007 00000012 t only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheet
+2020-06-16T22:30:55.392600800 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.392600800 Paquet reçu du client: 483805434 BEGIN 00000008 00000012 s containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. LorÃ©eem Ipsum is simply du
+2020-06-16T22:30:55.393601300 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.393601300 Paquet reçu du client: 1141308322 BEGIN 00000009 00000012 mmy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+2020-06-16T22:30:55.394601400 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.394601400 Paquet reçu du client: 2519623139 BEGIN 00000010 00000012 type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchan
+2020-06-16T22:30:55.395601500 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.395601500 Paquet reçu du client: 852045760 BEGIN 00000011 00000012 ged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus P
+2020-06-16T22:30:55.395601500 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:30:55.396601300 Paquet reçu du client: 109875824 BEGIN 00000012 00000012 ageMaker including versions of Lorem Ipsum.
+2020-06-16T22:30:55.396601300 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.863576500 Paquet reçu du client: 1893341651 BEGIN 00000001 00000012 poeme.txt
+2020-06-16T22:31:47.865576500 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.866578100 Paquet reçu du client: 4170236735 BEGIN 00000002 00000012 LorÃ©eem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unkno
+2020-06-16T22:31:47.867577600 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.867577600 Paquet reçu du client: 1175342569 BEGIN 00000003 00000012 wn printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, r
+2020-06-16T22:31:47.868578200 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.868578200 Paquet reçu du client: 1070347269 BEGIN 00000004 00000012 emaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publi
+2020-06-16T22:31:47.868578200 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.869577800 Paquet reçu du client: 2759144805 BEGIN 00000005 00000012 shing software like Aldus PageMaker including versions of Lorem Ipsum. LorÃ©eem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+2020-06-16T22:31:47.869577800 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.870578 Paquet reçu du client: 3606681525 BEGIN 00000006 00000012 the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived no
+2020-06-16T22:31:47.870578 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.871578600 Paquet reçu du client: 268178835 BEGIN 00000007 00000012 t only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheet
+2020-06-16T22:31:47.871578600 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.872578200 Paquet reçu du client: 483805434 BEGIN 00000008 00000012 s containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. LorÃ©eem Ipsum is simply du
+2020-06-16T22:31:47.872578200 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.873579100 Paquet reçu du client: 1141308322 BEGIN 00000009 00000012 mmy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+2020-06-16T22:31:47.873579100 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.874578700 Paquet reçu du client: 2519623139 BEGIN 00000010 00000012 type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchan
+2020-06-16T22:31:47.874578700 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.874578700 Paquet reçu du client: 852045760 BEGIN 00000011 00000012 ged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus P
+2020-06-16T22:31:47.875580100 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:31:47.875580100 Paquet reçu du client: 109875824 BEGIN 00000012 00000012 ageMaker including versions of Lorem Ipsum.
+2020-06-16T22:31:47.876579900 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.891240200 Paquet reçu du client: 1893341651 BEGIN 00000001 00000012 poeme.txt
+2020-06-16T22:32:26.894239800 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.895240200 Paquet reçu du client: 4170236735 BEGIN 00000002 00000012 LorÃ©eem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unkno
+2020-06-16T22:32:26.895240200 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.896241300 Paquet reçu du client: 1175342569 BEGIN 00000003 00000012 wn printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, r
+2020-06-16T22:32:26.896241300 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.897242100 Paquet reçu du client: 1070347269 BEGIN 00000004 00000012 emaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publi
+2020-06-16T22:32:26.897242100 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.898241700 Paquet reçu du client: 2759144805 BEGIN 00000005 00000012 shing software like Aldus PageMaker including versions of Lorem Ipsum. LorÃ©eem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+2020-06-16T22:32:26.898241700 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.899242100 Paquet reçu du client: 3606681525 BEGIN 00000006 00000012 the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived no
+2020-06-16T22:32:26.899242100 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.899242100 Paquet reçu du client: 268178835 BEGIN 00000007 00000012 t only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheet
+2020-06-16T22:32:26.900242300 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.900242300 Paquet reçu du client: 483805434 BEGIN 00000008 00000012 s containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. LorÃ©eem Ipsum is simply du
+2020-06-16T22:32:26.901244200 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.902242400 Paquet reçu du client: 2519623139 BEGIN 00000010 00000012 type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchan
+2020-06-16T22:32:26.902242400 Paquet envoyé au client:     1MISSINGPACKET
+2020-06-16T22:32:26.902242400 Paquet reçu du client: 1141308322 BEGIN 00000009 00000012 mmy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+2020-06-16T22:32:26.903242700 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.903242700 Paquet reçu du client: 2519623139 BEGIN 00000010 00000012 type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchan
+2020-06-16T22:32:26.904242 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.904242 Paquet reçu du client: 852045760 BEGIN 00000011 00000012 ged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus P
+2020-06-16T22:32:26.904242 Paquet envoyé au client:     0SUCCESS
+2020-06-16T22:32:26.905244 Paquet reçu du client: 109875824 BEGIN 00000012 00000012 ageMaker including versions of Lorem Ipsum.
+2020-06-16T22:32:26.905244 Paquet envoyé au client:     0SUCCESS

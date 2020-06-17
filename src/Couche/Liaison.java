@@ -91,4 +91,44 @@ public class Liaison {
             e.printStackTrace();
         }
     }
+    
+    public void ecrireLog(Trame trameAEcrire,int operation) {
+        File log = new File(".\\liaisonDeDonnees.log");
+
+        try {
+            if (log.createNewFile()) {
+                System.out.println("Fichier log créé: " + log.getName());
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur de creation de fichier log");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter logWriter = new FileWriter(log.getAbsolutePath(), true);
+
+            logWriter.write(java.time.LocalDateTime.now() + " ");
+
+            if (operation == 0)
+            {
+                logWriter.write("Paquet reçu du client: ");
+            }
+            else 
+            {
+                logWriter.write("Paquet envoyé au client: ");
+            }
+
+
+            logWriter.write(new String(trameAEcrire.getCRC()).trim() + " ");
+            logWriter.write(new String(trameAEcrire.getHeader()).trim() + " ");
+            logWriter.write(new String(trameAEcrire.getPacketNumber()).trim() + " ");
+            logWriter.write(new String(trameAEcrire.getPacketAmount()).trim() + " ");
+            logWriter.write(new String(trameAEcrire.getData()).trim() + "\n");
+
+            logWriter.close();
+        } catch (IOException e) {
+            System.out.println("Erreur au niveau de l'ecriture du log");
+            e.printStackTrace();
+        }
+    }
 }
