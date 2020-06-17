@@ -81,9 +81,6 @@ public class Transport {
 		}
 	}
 
-	public void GetFileName(Path path) {
-		fileName = path.getFileName().toString().getBytes();
-	}
 
 	private void sendRemainingPackets(String ipServer) {
 		int packetNumber = 2;
@@ -164,5 +161,10 @@ public class Transport {
 	private int getRandomIndex() {
 		return 3;  //ThreadLocalRandom.current().nextInt(1, numberOfPacket);
 	}
+	
+	public void GetFileName(Path path) {
+		fileName = path.getFileName().toString().getBytes();
+	}
+
 
 }
