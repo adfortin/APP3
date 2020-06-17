@@ -126,6 +126,7 @@ public class Transport {
 				trame.setData(byteList.get(i));
 				trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
 				packets.add(trame);
+				
 
 				DatagramSocket socket;
 				socket = new DatagramSocket();
@@ -151,6 +152,7 @@ public class Transport {
 
 				String messageError = received.substring(1);
 
+			
 
 				socket.close();
 

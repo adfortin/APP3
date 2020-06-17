@@ -107,6 +107,7 @@ public class Trame {
 	}
 	
 
+
 	public byte[] getTrame() 
 	{
 
