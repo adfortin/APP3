@@ -4,35 +4,33 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class Trame {
-	
+
 	private byte[] header;
 	private byte[] packetNumber;
 	private byte[] packetAmount;
 	private byte[] data;
 	private byte[] CRC;
 	private int packetNumberInt;
-    private int packetAmountInt;
-	
-	public Trame()
-	{
+	private int packetAmountInt;
+
+	public Trame() {
 		setHeader("BEGIN".getBytes());
 		setPacketNumber(0);
 		setPacketAmount(0);
 		setData(new byte[187]);
 		setCRC(new byte[5]);
 		setPacketNumberInt(0);
-        setPacketAmountInt(0);
+		setPacketAmountInt(0);
 	}
-	
-	public Trame(byte[] data)
-	{
+
+	public Trame(byte[] data) {
 		setHeader(new byte[0]);
 		setPacketNumber(new byte[0]);
 		setPacketAmount(new byte[0]);
 		setData(data);
 		setCRC(new byte[0]);
 		setPacketNumberInt(0);
-        setPacketAmountInt(0);
+		setPacketAmountInt(0);
 	}
 
 	public byte[] getData() {
@@ -58,66 +56,61 @@ public class Trame {
 	public void setPacketNumber(int packetNumber) {
 		this.packetNumber = createByteFromInt(packetNumber);
 	}
-	
+
 	public void setPacketNumber(byte[] packetNumber) {
 		this.packetNumber = packetNumber;
 	}
-
 
 	public byte[] getPacketAmount() {
 		return packetAmount;
 	}
 
 	public void setPacketAmount(int packetAmount) {
-	
+
 		this.packetAmount = createByteFromInt(packetAmount);
 	}
-	
+
 	public void setPacketAmount(byte[] packetAmount) {
-		
+
 		this.packetAmount = packetAmount;
 	}
-	
+
 	public int getPacketNumberInt() {
-        return packetNumberInt;
-    }
+		return packetNumberInt;
+	}
 
-    public void setPacketNumberInt(int packetNumberInt) {
-        this.packetNumberInt = packetNumberInt;
-    }
+	public void setPacketNumberInt(int packetNumberInt) {
+		this.packetNumberInt = packetNumberInt;
+	}
 
-    public int getPacketAmountInt() {
-        return packetAmountInt;
-    }
+	public int getPacketAmountInt() {
+		return packetAmountInt;
+	}
 
-    public void setPacketAmountInt(int packetAmountInt) {
-        this.packetAmountInt = packetAmountInt;
-    }
-	
-	public byte[] createByteFromInt(int packets) 
-	{
+	public void setPacketAmountInt(int packetAmountInt) {
+		this.packetAmountInt = packetAmountInt;
+	}
+
+	public byte[] createByteFromInt(int packets) {
 		String packetString = String.valueOf(packets);
 
-		while (packetString.length() < 8) 
-		{
+		while (packetString.length() < 8) {
 			packetString = "0" + packetString;
 		}
-		
+
 		return packetString.getBytes();
 	}
-	
 
-	public byte[] getTrame() 
-	{
+	public byte[] getTrame() {
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			outputStream.write(CRC);
 			outputStream.write(header);
 			outputStream.write(packetNumber);
 			outputStream.write(packetAmount);
 			outputStream.write(data);
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,17 +118,16 @@ public class Trame {
 
 		return outputStream.toByteArray();
 	}
-	
-	public byte[] getTrameTrimmed() 
-	{
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+	public byte[] getTrameTrimmed() {
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			outputStream.write(header);
 			outputStream.write(packetNumber);
 			outputStream.write(packetAmount);
 			outputStream.write(data);
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,6 +143,5 @@ public class Trame {
 	public void setHeader(byte[] header) {
 		this.header = header;
 	}
-	
-	
+
 }
