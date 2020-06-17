@@ -162,7 +162,7 @@ public class Transport {
 	}
 
 	private int getRandomIndex() {
-		return ThreadLocalRandom.current().nextInt(1, numberOfPacket + 1);
+		return ThreadLocalRandom.current().nextInt(1, numberOfPacket);
 	}
 
 }

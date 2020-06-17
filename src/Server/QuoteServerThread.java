@@ -16,6 +16,9 @@ public class QuoteServerThread extends Thread {
 	private Trame receivedtrame;
 	private Trame responseTrame;
 	private boolean moreQuotes = true;
+	private int packetloss;
+	private int packetSuccessful;
+	private int packetError;
 
 	public QuoteServerThread() throws IOException {
 		this("QuoteServerThread");
@@ -37,7 +40,7 @@ public class QuoteServerThread extends Thread {
 				socket.receive(packet);
 
 				receivedtrame = liaison.getTrame(new String(packet.getData()));
-				liaison.ecrireLog(receivedtrame, 0);
+				liaison.ecrireLog(receivedtrame, 0, packetSuccessful, packetloss, packetError);
 
 				if (liaison.validateTrameCRC(receivedtrame)) {
 					// Look for missing packet
@@ -47,17 +50,20 @@ public class QuoteServerThread extends Thread {
 					case 0:
 						System.out.println("Recu packet no: " + receivedtrame.getPacketNumberInt());
 						receivedPackets.add(receivedtrame);
+						packetSuccessful++;
 						responseTrame = new Trame("0SUCCESS".getBytes());
 						break;
 					case 1:
 						System.out.println("Manque packet no: " + (receivedtrame.getPacketNumberInt() - 1));
 						System.out.println("Retransmission du paquet manquant en cours...");
+						packetloss ++;
 						responseTrame = new Trame("1MISSINGPACKET".getBytes());
 						break;
 					}
 				} else {
 					System.out.println("CRC du paquet no: " + new String(receivedtrame.getPacketNumber()) + " non valide!");
 					System.out.println("Retransmission du paquet non valide en cours...");
+					packetError ++;
 					responseTrame = new Trame("2CRCERROR".getBytes());
 				}
 
@@ -67,9 +73,10 @@ public class QuoteServerThread extends Thread {
 				int port = packet.getPort();
 				packet = new DatagramPacket(buf, buf.length, address, port);
 				socket.send(packet);
-				liaison.ecrireLog(responseTrame, 1);
+				liaison.ecrireLog(responseTrame, 1, packetSuccessful, packetloss, packetError);
 				
 				if (receivedtrame.getPacketNumberInt() == receivedtrame.getPacketAmountInt()) {
+					liaison.ecrireLog(responseTrame, 2, packetSuccessful, packetloss, packetError);
 					moreQuotes = false;
 				}
 

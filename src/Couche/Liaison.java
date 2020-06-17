@@ -61,38 +61,8 @@ public class Liaison {
 			}
 		}
 	}
-	
-    public void ecrireLog(Trame trameAEcrire) {
-        File log = new File(".\\liaisonDeDonnees.log");
-        try {
-            if (log.createNewFile()) {
-                System.out.println("Fichier log créé: " + log.getName());
-            }
-            else {
-                System.out.println("Fichier log existant");
-            }
-        } catch (IOException e) {
-            System.out.println("Erreur de creation de fichier log");
-            e.printStackTrace();
-        }
     
-        try {
-            FileWriter logWriter = new FileWriter(log.getAbsolutePath());
-            logWriter.write(java.time.LocalDateTime.now() + " ");
-            logWriter.write(new String(trameAEcrire.getCRC()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getHeader()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getPacketNumber()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getPacketAmount()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getData()).trim() + "\n");
-            logWriter.close();
-            System.out.print("ecrire live up");
-        } catch (IOException e) {
-            System.out.println("Erreur au niveau de l'ecriture du log");
-            e.printStackTrace();
-        }
-    }
-    
-    public void ecrireLog(Trame trameAEcrire,int operation) {
+    public void ecrireLog(Trame trameAEcrire,int operation, int  packetSuccessful, int packetLoss, int packetError) {
         File log = new File(".\\liaisonDeDonnees.log");
 
         try {
@@ -124,6 +94,12 @@ public class Liaison {
             logWriter.write(new String(trameAEcrire.getPacketNumber()).trim() + " ");
             logWriter.write(new String(trameAEcrire.getPacketAmount()).trim() + " ");
             logWriter.write(new String(trameAEcrire.getData()).trim() + "\n");
+            
+            
+            if (operation == 2) {
+            	 logWriter.write("TRANSMISSION STATS:   SuccessfulPackets: " + String.valueOf(packetSuccessful) + "   PacketLoss: " + String.valueOf(packetLoss)+ "   PacketError: " + String.valueOf(packetError));
+            }
+            
 
             logWriter.close();
         } catch (IOException e) {
