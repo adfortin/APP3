@@ -68,7 +68,6 @@ public class QuoteServerThread extends Thread {
 				}
 
 				buf = responseTrame.getTrame();
-				// System.out.println(new String(buf));
 				InetAddress address = packet.getAddress();
 				int port = packet.getPort();
 				packet = new DatagramPacket(buf, buf.length, address, port);
@@ -123,10 +122,10 @@ public class QuoteServerThread extends Thread {
 
 	private String getFileName() {
 		// get file name except for the extension
-		String CompleteFileName = new String(receivedPackets.get(0).getData());
-		String[] parts = CompleteFileName.split(".");
+		String CompleteFileName = new String(receivedPackets.get(0).getData()).trim();
+		String[] parts = CompleteFileName.split("\\.");
 		String FileName = "";
-		for (int i = 0; i < parts.length; i++) {
+		for (int i = 0; i < parts.length - 1 ; i++) {
 			FileName += parts[i];
 		}
 		return FileName;
