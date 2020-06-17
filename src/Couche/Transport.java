@@ -12,24 +12,76 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import AuxClass.Trame;
 
+/**
+ * 
+ * Couche transport permettant de transporter les données du client au serveur
+ *
+ */
 public class Transport {
+	/**
+	 * Erreur voulue afin de tester les cas non-fonctionnels
+	 * 0 - Pas d'erreur,  1 - Erreur de CRC,  2 - Erreur de paquet manquant
+	 */
 	private int wantedError;
+	/**
+	 * Variable qui compte le nombre d'erreur de transmission au serveur
+	 */
 	private int errorCpt;
+	/**
+	 * Nombre entier aléatoire afin de tester un paquet manquant
+	 */
 	private int randonIndex;
+	/**
+	 * Nombre de packet total dans le paquet
+	 */
 	private int numberOfPacket;
+	/**
+	 * Longeur du texte entré en bytes
+	 */
 	private int contentLength;
+	/**
+	 * Longuer totale des données afin de ne pas dépasser 200 bytes par paquet
+	 */
 	private int maxDataLength = 169;
+	/**
+	 * Booléen permettant de savoir si une erreur a déjà été créé pour un paquet manquant
+	 */
 	private boolean alreadyCreated;
+	/**
+	 * Contenu du paquet à gérer+
+	 */
 	private byte[] content;
+	/**
+	 * Nom du fichier dont le client envoie
+	 */
 	private byte[] fileName;
+	/**
+	 * Liste des paquets à envoyer au total
+	 */
 	private List<Trame> packets = new ArrayList<>();
+	/**
+	 * Données de chaque paquet séparées en liste 
+	 */
 	private List<byte[]> byteList = new ArrayList<>();
+	/**
+	 * Liaison entre le serveur et le client
+	 */
 	private Liaison liaison;
 
+	/**
+	 * Constructeur de la couche Transport
+	 */
 	public Transport() {
 		liaison = new Liaison();
 	}
 
+	/**
+	 * Méthode permettant d'envoyer le fichier au serveur à l'addresse ipServer
+	 * @param text Contenu du fichier à envoyer
+	 * @param ipServer Adresse IP du serveur où l'on veut envoyer
+	 * @param wantedErr Variable décrivant l'erreur que l'on veut tester où 
+	 * 0 - Pas d'erreur,  1 - Erreur de CRC,  2 - Erreur de paquet manquant
+	 */
 	public void sendRequest(byte[] text, String ipServer, String wantedErr) {
 		contentLength = text.length;
 		content = text;
@@ -46,6 +98,10 @@ public class Transport {
 		sendRemainingPackets(ipServer);
 	}
 
+	/**
+	 * Méthode permettant d'envoyer le premier paquet avec le nom du fichier
+	 * @param ipServer Adresse IP où l'on veut envoyer le paquet
+	 */
 	public void sendFirstRequest(String ipServer) {
 		try {
 			Trame trame1 = new Trame();
@@ -81,10 +137,18 @@ public class Transport {
 		}
 	}
 
+	/**
+	 * Méthode permettant d'obtenir le nom du fichier à envoyer
+	 * @param path Path où le fichier est localisé dans le client
+	 */
 	public void GetFileName(Path path) {
 		fileName = path.getFileName().toString().getBytes();
 	}
 
+	/**
+	 * Méthode qui envoie les paquets restants avec les données du fichier à envoyer au serveur
+	 * @param ipServer Adresse IP où l'on veut envoyer les données
+	 */
 	private void sendRemainingPackets(String ipServer) {
 		int packetNumber = 2;
 		Trame trame;
@@ -148,6 +212,10 @@ public class Transport {
 		}
 	}
 
+	/**
+	 * Méthode permettant de séparer le contenu à envoyer en plusieurs bytes qui ne dépasse pas la limite
+	 * déterminée par la variable maxDataLength
+	 */
 	private void SplitContentIntoArray() {
 		byte[] cuttedByte = new byte[maxDataLength];
 		for (int i = 0; i < contentLength; i += maxDataLength) {
@@ -161,6 +229,10 @@ public class Transport {
 		}
 	}
 
+	/**
+	 * Méthode permettant d'obtenir un index aléatoire des paquets envoyés pour des raisons de test
+	 * @return Nombre entier entre 0 et le nombre total de paquets + 1
+	 */
 	private int getRandomIndex() {
 		return ThreadLocalRandom.current().nextInt(1, numberOfPacket + 1);
 	}

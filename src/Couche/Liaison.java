@@ -10,9 +10,16 @@ import java.util.regex.Pattern;
 import java.util.zip.CRC32;
 
 import AuxClass.Trame;
-
+/**
+ *
+ * Couche de liaison entre le serveur et le client
+ *
+ */
 public class Liaison {
 
+	/**
+	 * Méthode servant à trouver le CRC à partir de données en bytes
+	 */
 	public byte[] calculCRC(byte[] message) {
 		String mTrimmed = new String(message).trim();
 		CRC32 crc = new CRC32();
@@ -22,6 +29,11 @@ public class Liaison {
 		return String.valueOf(value).getBytes();
 	}
 
+	/**
+	 * Méthode qui retourne une trame avec les données insérées par argument en string
+	 * @param String données que l'on veut convertir en trame
+	 * @return Trame avec les données insérées dans le paramètre
+	 */
 	public Trame getTrame(String data) {
 		Trame trame = new Trame();
 		String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)";
@@ -42,6 +54,12 @@ public class Liaison {
 		return trame;
 	}
 
+	/**
+	 * Méthode qui reçoit une trame et qui compare le CRC de la trame avec le CRC calculé du reste de la trame
+	 * afin de vérifier que les données sont bien exactes
+	 * @param trameRecu Trame qui contient le CRC et les données à recalculer
+	 * @return True si le CRC de la trame reçue et le CRC calculé sont équivalent
+	 */
 	public boolean validateTrameCRC(Trame trameRecu) {
 		byte[] crc = trameRecu.getCRC();
 		byte[] trameWithoutCRC = trameRecu.getTrameTrimmed();
@@ -50,6 +68,12 @@ public class Liaison {
 		return Arrays.equals(crc, newCRC);
 	}
 
+	/**
+	 * Méthode qui vérifie si un packet est manquant
+	 * @param packets Liste des packets qui sont envoyés
+	 * @param currentPacketId Numéro du packet à vérifier
+	 * @return True si le packet est manquant
+	 */
 	public int checkForSkipedPacket(List<Trame> packets, int currentPacketId) {
 		if (packets.size() == 0 && currentPacketId == 1) {
 			return 0;
@@ -62,36 +86,12 @@ public class Liaison {
 		}
 	}
 	
-    public void ecrireLog(Trame trameAEcrire) {
-        File log = new File(".\\liaisonDeDonnees.log");
-        try {
-            if (log.createNewFile()) {
-                System.out.println("Fichier log créé: " + log.getName());
-            }
-            else {
-                System.out.println("Fichier log existant");
-            }
-        } catch (IOException e) {
-            System.out.println("Erreur de creation de fichier log");
-            e.printStackTrace();
-        }
-    
-        try {
-            FileWriter logWriter = new FileWriter(log.getAbsolutePath());
-            logWriter.write(java.time.LocalDateTime.now() + " ");
-            logWriter.write(new String(trameAEcrire.getCRC()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getHeader()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getPacketNumber()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getPacketAmount()).trim() + " ");
-            logWriter.write(new String(trameAEcrire.getData()).trim() + "\n");
-            logWriter.close();
-            System.out.print("ecrire live up");
-        } catch (IOException e) {
-            System.out.println("Erreur au niveau de l'ecriture du log");
-            e.printStackTrace();
-        }
-    }
-    
+	/**
+	 * Méthode qui permet d'écrire un log avec les informations de la trame reçue en paramètre
+	 * le paramètre operation sert à savoir si la trame est reçue du client ou du serveur
+	 * @param trameAEcrire La trame à écrire dans le fichier log
+	 * @param operation Quel élément à envoyé la trame
+	 */
     public void ecrireLog(Trame trameAEcrire,int operation) {
         File log = new File(".\\liaisonDeDonnees.log");
 
