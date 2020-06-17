@@ -95,7 +95,7 @@ public class QuoteServerThread extends Thread {
 		// approximate size of file to create: get size of first real packet * total number
 		int sizeInBytes = receivedPackets.get(1).getTrame().length * numberOfPackets;
 
-		System.out.println("Creation du fichier... Nombre de paquets: " + numberOfPackets + "  Grosseur Total en byte: " + sizeInBytes);
+		System.out.println("Creation du fichier... Nombre de paquets: " + numberOfPackets + "  Grosseur Total en byte: " + sizeInBytes + "\nLocalistion du fichier:" + System.getProperty("user.dir"));
 		System.out.println(nameOfFile);
 
 		File file = new File(nameOfFile + "Received.txt"); // Create a temporary file to reserve memory.
