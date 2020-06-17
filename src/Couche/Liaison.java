@@ -18,7 +18,7 @@ import AuxClass.Trame;
 public class Liaison {
 
 	/**
-	 * Mï¿½thode servant ï¿½ trouver le CRC ï¿½ partir de donnï¿½es en bytes
+	 * Méthode servant a trouver le CRC a partir de données en bytes
 	 */
 	public byte[] calculCRC(byte[] message) {
 		String mTrimmed = new String(message).trim();
@@ -30,9 +30,9 @@ public class Liaison {
 	}
 
 	/**
-	 * Mï¿½thode qui retourne une trame avec les donnï¿½es insï¿½rï¿½es par argument en string
-	 * @param String donnï¿½es que l'on veut convertir en trame
-	 * @return Trame avec les donnï¿½es insï¿½rï¿½es dans le paramï¿½tre
+	 * Méthode qui retourne une trame avec les données insérées par argument en string
+	 * @param String données que l'on veut convertir en trame
+	 * @return Trame avec les données insérées dans le paramètre
 	 */
 	public Trame getTrame(String data) {
 		Trame trame = new Trame();
@@ -55,10 +55,10 @@ public class Liaison {
 	}
 
 	/**
-	 * Mï¿½thode qui reï¿½oit une trame et qui compare le CRC de la trame avec le CRC calculï¿½ du reste de la trame
-	 * afin de vï¿½rifier que les donnï¿½es sont bien exactes
-	 * @param trameRecu Trame qui contient le CRC et les donnï¿½es ï¿½ recalculer
-	 * @return True si le CRC de la trame reï¿½ue et le CRC calculï¿½ sont ï¿½quivalent
+	 * Méthode qui reçoit une trame et qui compare le CRC de la trame avec le CRC calculé du reste de la trame
+	 * afin de vérifier que les données sont bien exactes
+	 * @param trameRecu Trame qui contient le CRC et les données a recalculer
+	 * @return True si le CRC de la trame reçue et le CRC calculé sont équivalents
 	 */
 	public boolean validateTrameCRC(Trame trameRecu) {
 		byte[] crc = trameRecu.getCRC();
@@ -69,9 +69,9 @@ public class Liaison {
 	}
 
 	/**
-	 * Mï¿½thode qui vï¿½rifie si un packet est manquant
-	 * @param packets Liste des packets qui sont envoyï¿½s
-	 * @param currentPacketId Numï¿½ro du packet ï¿½ vï¿½rifier
+	 * Méthode qui vérifie si un packet est manquant
+	 * @param packets Liste des packets qui sont envoyés
+	 * @param currentPacketId Numéro du packet a vérifier
 	 * @return True si le packet est manquant
 	 */
 	public int checkForSkipedPacket(List<Trame> packets, int currentPacketId) {
@@ -87,17 +87,17 @@ public class Liaison {
 	}
 	
 	/**
-	 * Mï¿½thode qui permet d'ï¿½crire un log avec les informations de la trame reï¿½ue en paramï¿½tre
-	 * le paramï¿½tre operation sert ï¿½ savoir si la trame est reï¿½ue du client ou du serveur
-	 * @param trameAEcrire La trame ï¿½ ï¿½crire dans le fichier log
-	 * @param operation Quel ï¿½lï¿½ment ï¿½ envoyï¿½ la trame
+	 * Méthode qui permet d'écrire un log avec les informations de la trame reçue en paramètre
+	 * le paramètre operation sert a savoir si la trame est reçue du client ou du serveur
+	 * @param trameAEcrire La trame a écrire dans le fichier log
+	 * @param operation Quel élément a envoyé la trame
 	 */
     public void ecrireLog(Trame trameAEcrire,int operation, int  packetSuccessful, int packetLoss, int packetError) {
         File log = new File(".\\liaisonDeDonnees.log");
 
         try {
             if (log.createNewFile()) {
-                System.out.println("Fichier log crï¿½ï¿½: " + log.getName());
+                System.out.println("Fichier log créé: " + log.getName());
             }
         } catch (IOException e) {
             System.out.println("Erreur de creation de fichier log");
@@ -111,11 +111,11 @@ public class Liaison {
 
             if (operation == 0)
             {
-                logWriter.write("Paquet reï¿½u du client: ");
+                logWriter.write("Paquet reçu du client: ");
             }
             else 
             {
-                logWriter.write("Paquet envoyï¿½ au client: ");
+                logWriter.write("Paquet envoyé au client: ");
             }
 
 
@@ -133,7 +133,7 @@ public class Liaison {
 
             logWriter.close();
         } catch (IOException e) {
-            System.out.println("Erreur au niveau de l'ecriture du log");
+            System.out.println("Erreur au niveau de l'écriture du log");
             e.printStackTrace();
         }
     }

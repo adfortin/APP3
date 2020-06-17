@@ -14,7 +14,7 @@ import AuxClass.Trame;
 
 /**
  * 
- * Couche transport permettant de transporter les donnï¿½es du client au serveur
+ * Couche transport permettant de transporter les données du client au serveur
  *
  */
 public class Transport {
@@ -28,7 +28,7 @@ public class Transport {
 	 */
 	private int errorCpt;
 	/**
-	 * Nombre entier alï¿½atoire afin de tester un paquet manquant
+	 * Nombre entier aléatoire afin de tester un paquet manquant
 	 */
 	private int randonIndex;
 	/**
@@ -36,19 +36,19 @@ public class Transport {
 	 */
 	private int numberOfPacket;
 	/**
-	 * Longeur du texte entrï¿½ en bytes
+	 * Longeur du texte entré en bytes
 	 */
 	private int contentLength;
 	/**
-	 * Longuer totale des donnï¿½es afin de ne pas dï¿½passer 200 bytes par paquet
+	 * Longuer totale des données afin de ne pas dépasser 200 bytes par paquet
 	 */
 	private int maxDataLength = 169;
 	/**
-	 * Boolï¿½en permettant de savoir si une erreur a dï¿½jï¿½ ï¿½tï¿½ crï¿½ï¿½ pour un paquet manquant
+	 * Booléen permettant de savoir si une erreur a déjà été créé pour un paquet manquant
 	 */
 	private boolean alreadyCreated;
 	/**
-	 * Contenu du paquet ï¿½ gï¿½rer+
+	 * Contenu du paquet a gérer
 	 */
 	private byte[] content;
 	/**
@@ -56,11 +56,11 @@ public class Transport {
 	 */
 	private byte[] fileName;
 	/**
-	 * Liste des paquets ï¿½ envoyer au total
+	 * Liste des paquets a envoyer au total
 	 */
 	private List<Trame> packets = new ArrayList<>();
 	/**
-	 * Donnï¿½es de chaque paquet sï¿½parï¿½es en liste 
+	 * Données de chaque paquet séparées en liste 
 	 */
 	private List<byte[]> byteList = new ArrayList<>();
 	/**
@@ -76,10 +76,10 @@ public class Transport {
 	}
 
 	/**
-	 * Mï¿½thode permettant d'envoyer le fichier au serveur ï¿½ l'addresse ipServer
-	 * @param text Contenu du fichier ï¿½ envoyer
-	 * @param ipServer Adresse IP du serveur oï¿½ l'on veut envoyer
-	 * @param wantedErr Variable dï¿½crivant l'erreur que l'on veut tester oï¿½ 
+	 * Méthode permettant d'envoyer le fichier au serveur a l'addresse ipServer
+	 * @param text Contenu du fichier a envoyer
+	 * @param ipServer Adresse IP du serveur où l'on veut envoyer
+	 * @param wantedErr Variable décrivant l'erreur que l'on veut tester où 
 	 * 0 - Pas d'erreur,  1 - Erreur de CRC,  2 - Erreur de paquet manquant
 	 */
 	public void sendRequest(byte[] text, String ipServer, String wantedErr) {
@@ -99,8 +99,8 @@ public class Transport {
 	}
 
 	/**
-	 * Mï¿½thode permettant d'envoyer le premier paquet avec le nom du fichier
-	 * @param ipServer Adresse IP oï¿½ l'on veut envoyer le paquet
+	 * Méthode permettant d'envoyer le premier paquet avec le nom du fichier
+	 * @param ipServer Adresse IP où l'on veut envoyer le paquet
 	 */
 	public void sendFirstRequest(String ipServer) {
 		try {
@@ -138,16 +138,8 @@ public class Transport {
 	}
 
 	/**
-	 * Mï¿½thode permettant d'obtenir le nom du fichier ï¿½ envoyer
-	 * @param path Path oï¿½ le fichier est localisï¿½ dans le client
-	 */
-	public void GetFileName(Path path) {
-		fileName = path.getFileName().toString().getBytes();
-	}
-
-	/**
-	 * Mï¿½thode qui envoie les paquets restants avec les donnï¿½es du fichier ï¿½ envoyer au serveur
-	 * @param ipServer Adresse IP oï¿½ l'on veut envoyer les donnï¿½es
+	 * Méthode qui envoie les paquets restants avec les données du fichier a envoyer au serveur
+	 * @param ipServer Adresse IP oé l'on veut envoyer les données
 	 */
 	private void sendRemainingPackets(String ipServer) {
 		int packetNumber = 2;
@@ -213,8 +205,8 @@ public class Transport {
 	}
 
 	/**
-	 * Mï¿½thode permettant de sï¿½parer le contenu ï¿½ envoyer en plusieurs bytes qui ne dï¿½passe pas la limite
-	 * dï¿½terminï¿½e par la variable maxDataLength
+	 * Méthode permettant de séparer le contenu a envoyer en plusieurs bytes qui ne dépasse pas la limite
+	 * déterminée par la variable maxDataLength
 	 */
 	private void SplitContentIntoArray() {
 		byte[] cuttedByte = new byte[maxDataLength];
@@ -230,13 +222,19 @@ public class Transport {
 	}
 
 	/**
-	 * Mï¿½thode permettant d'obtenir un index alï¿½atoire des paquets envoyï¿½s pour des raisons de test
+	 * Méthode permettant d'obtenir un index aléatoire des paquets envoyés
+	 * pour des raisons de test
+	 * 
 	 * @return Nombre entier entre 0 et le nombre total de paquets + 1
 	 */
 	private int getRandomIndex() {
 		return 3;  //ThreadLocalRandom.current().nextInt(1, numberOfPacket);
 	}
 	
+	/**
+	 * Méthode permettant d'obtenir le nom du fichier a envoyer
+	 * @param path Path oé le fichier est localisé dans le client
+	 */
 	public void GetFileName(Path path) {
 		fileName = path.getFileName().toString().getBytes();
 	}
