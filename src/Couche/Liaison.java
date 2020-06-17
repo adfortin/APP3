@@ -12,21 +12,21 @@ public class Liaison {
 
 	public byte[] calculCRC(byte[] message) 
 	{
+		String mTrimmed = new String(message).trim();
+		
 		CRC32 crc = new CRC32();
-		crc.update(message);
+		crc.update(mTrimmed.getBytes());
 		
 		long value = crc.getValue();
 		
 		return String.valueOf(value).getBytes();
 	}
 	
-	
 	public Trame getTrame(String data)
 	{
 		Trame trame = new Trame();
-		String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)"; 
-		Pattern r = Pattern.compile(pattern, Pattern.MULTILINE);
-		
+		String pattern = "([0-9].*?)(BEGIN)(\\d{8})(\\d{8})(.*?$)";
+		Pattern r = Pattern.compile(pattern, Pattern.DOTALL);
 		Matcher m = r.matcher(data);
 		
 	      
@@ -45,17 +45,17 @@ public class Liaison {
 	      return trame;
 	}
 	
+	
 	public boolean validateTrameCRC(Trame trameRecu)
 	{
 		byte[] crc = trameRecu.getCRC();
-		byte[] trameWithoutCRC = trameRecu.getTrameTrimmed();		
+		byte[] trameWithoutCRC = trameRecu.getTrameTrimmed();	
 		byte[] newCRC = calculCRC(trameWithoutCRC);
-
+		
 		return Arrays.equals(crc,newCRC);
 	}
 	
 	public int checkForSkipedPacket(List<Trame> packets, int currentPacketId) {
-        //System.out.println(packets.size() + "  " +  currentPacketId);
         if (packets.size() == 0 && currentPacketId == 1) {
             return 0;
         }else {
@@ -67,10 +67,6 @@ public class Liaison {
             }
         }
     }
-	
-	public void AskForPaquet(byte[] paquetNumber) 
-	{
-		
-	}
+
 	
 }

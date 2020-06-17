@@ -55,31 +55,32 @@ public class Transport {
 			trame1.setPacketNumber(1);
 			trame1.setPacketAmount(numberOfPacket + 2);
 			trame1.setCRC(liaison.calculCRC(trame1.getTrameTrimmed()));
+			
+			DatagramSocket socket = new DatagramSocket();
 
-			DatagramSocket socket;
-			socket = new DatagramSocket();
 			
 			int codeError = 5;
 			String messageError = "";
 			byte[] buf = trame1.getTrame();
+			byte[] bufResponse = new Trame(new byte[20]).getTrame();
 			InetAddress address = InetAddress.getByName(ipServer);
-			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
+			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25002);
 			
-			while (codeError!= 0) 
+			while (codeError != 0) 
 			{
 				socket.send(packet);
 
 				// get response
-				packet = new DatagramPacket(buf, buf.length);
-				socket.receive(packet);
+				DatagramPacket packet1 = new DatagramPacket(bufResponse, bufResponse.length);
+				socket.receive(packet1);
 				
 				// display response
-				String received = new String(packet.getData(), 0, packet.getLength());
+				String received = new String(packet1.getData(), 0, packet1.getLength());
 				codeError = Integer.parseInt(received.substring(0, 1));
-				//System.out.println("Quote of the Moment: " + codeError);
 				messageError = received.substring(1);
+				
 			}
-			
+
 
 			socket.close();
 
@@ -91,13 +92,6 @@ public class Transport {
 	}
 
 	private void SplitContentIntoArray() {
-		
-		 /*for (int i = 0; i < contentLength; i += maxDataLength ) { 
-			 byte[] cuttedByte = Arrays.copyOfRange(content , i, i + maxDataLength); 
-			 byteList.add(cuttedByte);
-		 }*/
-		 
-
 		byte[] cuttedByte = new byte[maxDataLength];
 		for (int i = 0; i < contentLength; i += maxDataLength) {
 			if (i + maxDataLength < contentLength) {
@@ -126,22 +120,25 @@ public class Transport {
 				trame.setData(byteList.get(i));
 				trame.setCRC(liaison.calculCRC(trame.getTrameTrimmed()));
 				packets.add(trame);
-
+				
 				DatagramSocket socket;
 				socket = new DatagramSocket();
 
 				byte[] buf = trame.getTrame();
+				byte[] bufResponse = new Trame(new byte[20]).getTrame();
+				
 				InetAddress address = InetAddress.getByName(ipServer);
-				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25001);
+				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25002);
 				socket.send(packet);
 
 				// get response
-				packet = new DatagramPacket(buf, buf.length);
+				packet = new DatagramPacket(bufResponse, bufResponse.length);
 				socket.receive(packet);
 
 				// display response
-				String received = new String(packet.getData(), 0, packet.getLength());
+				String received = new String(packet.getData());
 
+				//System.out.println(received);
 				int codeError = Integer.parseInt(received.substring(0, 1));
 				if (codeError != 0)
 				{
